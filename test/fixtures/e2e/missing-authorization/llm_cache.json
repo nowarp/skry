@@ -1,0 +1,229 @@
+{
+  "UnifiedClassify": {
+    "test::ac1_config::AdminCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::ac1_withdraw::RewarderGlobalVault": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": true,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": ["balance"],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::ac1_withdraw::GlobalConfig": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": true,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": ["min_withdraw", "max_withdraw"],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::checks_role_admin::AdminCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::checks_role_admin::OperatorCap": {
+      "is_role": true,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::checks_role_treasury::Treasury": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": true,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": ["balance"],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::checks_role_treasury::GlobalConfig": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": true,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": ["min_withdraw", "max_withdraw"],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "cross_module::entry::Config": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": true,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": ["admin"],
+      "state_fields": [],
+      "privileged_fields": ["admin"],
+      "lock_fields": []
+    },
+    "cross_module::guarded_helper::AdminCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "cross_module::unguarded_helper::AdminCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::user_creatable::AssetRegistry": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": true,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": ["assets"],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::user_creatable::Pool": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": true,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": ["balance"],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::user_creatable::UserAsset": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": true,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::user_creatable::Config": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": true,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": ["admin"],
+      "state_fields": [],
+      "privileged_fields": ["admin"],
+      "lock_fields": []
+    }
+  },
+  "AccessControlClassify": {
+    "test::ac1_withdraw::withdraw_safe": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Has AdminCap parameter for access control"
+    },
+    "test::ac1_withdraw::withdraw_unsafe": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "No access control - anyone can withdraw funds"
+    },
+    "test::checks_role_treasury::withdraw_with_admin": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Has AdminCap parameter for access control"
+    },
+    "test::checks_role_treasury::withdraw_with_operator": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Has OperatorCap parameter for access control"
+    },
+    "test::checks_role_treasury::withdraw_unsafe": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "No access control - anyone can withdraw funds"
+    },
+    "test::entry::withdraw_via_unguarded": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "No access control and calls unguarded helper"
+    },
+    "test::entry::withdraw_via_guarded": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Calls guarded helper with sender check"
+    },
+    "test::entry::withdraw_with_role": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Has AdminCap parameter for access control"
+    },
+    "test::user_creatable::create_and_register_asset": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "FP test: LLM incorrectly classifies as vulnerable"
+    },
+    "test::user_creatable::create_and_drain": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Adversarial test: creates user asset BUT also drains pool"
+    },
+    "test::user_creatable::create_and_corrupt": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "FN test: creates user asset BUT also corrupts config"
+    }
+  }
+}

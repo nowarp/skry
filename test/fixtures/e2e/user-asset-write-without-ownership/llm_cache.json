@@ -1,0 +1,122 @@
+{
+  "UnifiedClassify": {
+    "test::user_asset_write::UserVault": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": true,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [
+        "balance",
+        "data"
+      ],
+      "privileged_fields": [
+        "owner"
+      ],
+      "lock_fields": []
+    },
+    "test::user_asset_write::AdminCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::cross_module_helper::UserVault": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": true,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [
+        "balance",
+        "data"
+      ],
+      "privileged_fields": [
+        "owner"
+      ],
+      "lock_fields": []
+    }
+  },
+  "AccessControlClassify": {
+    "test::user_asset_write::steal_modify": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Writes to user vault without ownership check - attacker can modify any vault"
+    },
+    "test::user_asset_write::steal_withdraw": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Withdraws from user vault without ownership check - attacker can drain any vault"
+    },
+    "test::user_asset_write::modify_via_helper": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Entry calls helper that writes to vault without ownership check"
+    },
+    "test::user_asset_write::safe_modify": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Checks vault.owner == sender before modification"
+    },
+    "test::user_asset_write::safe_deposit": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Deposit operation - user adds their own funds"
+    },
+    "test::user_asset_write::admin_modify": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Protected by AdminCap role check"
+    },
+    "test::user_asset_write::modify_via_guarded_helper": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Calls helper with ownership check guard"
+    },
+    "test::user_asset_write::create_vault": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Creates vault owned by sender"
+    },
+    "test::user_asset_write::user_withdraw": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "User withdraws their own funds with ownership check"
+    },
+    "test::cross_module_entry::modify_cross_module": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Cross-module write without ownership check"
+    },
+    "test::cross_module_entry::modify_cross_module_safe": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Cross-module call with ownership check in helper"
+    },
+    "test::cross_module_helper::deposit": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Deposit operation - user adds their own funds"
+    },
+    "test::cross_module_helper::withdraw": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "User withdraws their own funds with ownership check"
+    },
+    "test::cross_module_helper::create_vault": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Creates vault owned by sender"
+    }
+  }
+}

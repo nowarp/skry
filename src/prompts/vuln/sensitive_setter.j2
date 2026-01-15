@@ -1,0 +1,57 @@
+{% if struct_sources %}
+## SHARED STRUCT DEFINITIONS
+These are shared objects - globally accessible, need authorization for modification:
+{% for type_name, struct_src in struct_sources.items() %}
+```move
+{{ struct_src }}
+```
+{% endfor %}
+{% endif %}
+
+## FUNCTION ({{ visibility }}): {{ func_name }}
+{% if entry_docstring %}
+{{ entry_docstring }}
+{% endif %}
+```move
+{{ entry_source }}
+```
+
+{% if callee_sources %}
+## CALLEES (receive mutable shared object):
+{% for callee, callee_source in callee_sources.items() %}
+### {{ callee }}
+```move
+{{ callee_source }}
+```
+{% endfor %}
+{% endif %}
+
+## TASK
+Analyze if this function is a SENSITIVE SETTER that should require admin authorization.
+
+This function takes &mut to a shared object and has NO capability/role parameter.
+
+FIRST, check for ACCESS CONTROL mechanisms:
+- Does the function verify caller identity before modifying state?
+- Look for: assert!/abort conditions comparing tx_context::sender() against stored addresses
+- Look for: any conditional checks that gate execution based on caller identity
+- If ANY access control mechanism exists, the function is SAFE (has_access_control=true)
+
+IF NO ACCESS CONTROL, then classify:
+
+VULNERABLE (needs admin auth):
+- Modifies protocol-wide configuration (fee rates, interest rates, parameters)
+- Changes admin/owner addresses or roles
+- Updates protocol limits, caps, thresholds, or multipliers
+- Modifies pause/lock/freeze states
+- Changes oracle/price feed settings
+- Any state change that affects ALL users or protocol economics
+
+SAFE (no admin auth needed):
+- User modifies their OWN data/position (user-scoped state)
+- User deposits/withdraws their OWN assets
+- Initializes user's personal record
+- View/getter function
+- Creates new user-owned objects
+
+Answer:

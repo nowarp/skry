@@ -1,0 +1,133 @@
+{
+  "UnifiedClassify": {
+    "test::token_metadata::TokenMetadata": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": true,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [
+        "balance"
+      ],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::token_metadata::AdminCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::config_write::ProtocolConfig": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": true,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::config_write::AdminCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::config_write::WeightHookAdminCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::fqn_a_dex::Config": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": true,
+      "is_state_container": false,
+      "config_fields": ["fee_rate"],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::fqn_b_user::Config": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": true,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": [],
+      "reasoning": "User preferences struct, NOT protocol config"
+    }
+  },
+  "AccessControlClassify": {
+    "test::config_write::set_fee": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Vulnerable function in config-write-without-privileged"
+    },
+    "test::config_write::set_oracle": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Vulnerable function in config-write-without-privileged"
+    },
+    "test::config_write::update_fee": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Vulnerable function in config-write-without-privileged"
+    },
+    "test::config_write::set_fee_admin": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Safe function with proper access control"
+    },
+    "test::config_write::set_fee_with_sender": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Safe function with proper access control"
+    },
+    "test::config_write::set_fee_with_sender_method": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Safe function with proper access control"
+    },
+    "test::config_write::set_fee_internal": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Safe function with proper access control"
+    },
+    "test::config_write::set_fee_with_compound_cap": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Safe function with proper access control"
+    }
+  }
+}

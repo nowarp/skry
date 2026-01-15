@@ -1,0 +1,670 @@
+{
+  "UnifiedClassify": {
+    "test::fqn_collision_a::Pool": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": true,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [
+        "balance"
+      ],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::missing_transfer_helper::Pool": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": true,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [
+        "balance"
+      ],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::missing_transfer_ipa_safe::Pool": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": true,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [
+        "balance"
+      ],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::missing_transfer_hop_b::Pool": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": true,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [
+        "balance"
+      ],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::missing_transfer_safe::Pool": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": true,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [
+        "balance"
+      ],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::missing_transfer::Pool": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": true,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [
+        "balance"
+      ],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::fqn_collision_b::Pool": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": true,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [
+        "balance"
+      ],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::missing_transfer_ipa_vuln::Pool": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": true,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [
+        "balance"
+      ],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::missing_transfer_edge::Pool": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": true,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [
+        "balance"
+      ],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::missing_transfer_edge::NestedPool": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": true,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [
+        "inner"
+      ],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::missing_transfer_safe_hop_b::Pool": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": true,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [
+        "balance"
+      ],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::missing_transfer_deep::Pool": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": true,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [
+        "balance"
+      ],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::missing_transfer_diamond::Pool": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": true,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [
+        "balance"
+      ],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::missing_transfer_conditional::Pool": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": true,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [
+        "balance"
+      ],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::missing_transfer_wrapper::Pool": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": true,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [
+        "balance"
+      ],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::missing_transfer_wrapper::Receipt": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": true,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [
+        "coins"
+      ],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::missing_transfer_wrapper::Escrow": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": true,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [
+        "held_coins"
+      ],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::missing_transfer_generic::GenericPool": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": true,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [
+        "balance"
+      ],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::missing_transfer_generic::DualPool": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": true,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [
+        "balance_a",
+        "balance_b"
+      ],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::missing_transfer_return::Pool": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": true,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [
+        "balance"
+      ],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::missing_transfer_recursive_a::Pool": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": true,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [
+        "balance"
+      ],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::missing_transfer_loop::Pool": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": true,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [
+        "balance"
+      ],
+      "privileged_fields": [],
+      "lock_fields": []
+    }
+  },
+  "AccessControlClassify": {
+    "test::fqn_collision_a::withdraw": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Vulnerable function in missing-transfer"
+    },
+    "test::missing_transfer_helper::extract_no_transfer": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Vulnerable function in missing-transfer"
+    },
+    "test::missing_transfer_helper::extract_and_return": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Safe function with proper access control"
+    },
+    "test::missing_transfer_ipa_safe::withdraw": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Safe function with proper access control"
+    },
+    "test::missing_transfer_ipa_safe::withdraw_split_responsibility": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Safe function with proper access control"
+    },
+    "test::missing_transfer::withdraw_split_missing": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Vulnerable function in missing-transfer"
+    },
+    "test::missing_transfer::withdraw_via_helper": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Vulnerable function in missing-transfer"
+    },
+    "test::missing_transfer::withdraw_and_redeposit": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Safe function with proper access control"
+    },
+    "test::missing_transfer_entry::withdraw_cross_module": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Vulnerable function in missing-transfer"
+    },
+    "test::missing_transfer_entry::withdraw_cross_module_safe": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Safe function with proper access control"
+    },
+    "test::fqn_collision_b::withdraw": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Safe function with proper access control"
+    },
+    "test::missing_transfer_ipa_vuln::withdraw": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Vulnerable function in missing-transfer"
+    },
+    "test::missing_transfer_ipa_vuln::withdraw_two_hop": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Vulnerable function in missing-transfer"
+    }
+  },
+  "TransferClassify": {
+    "test::fqn_collision_a::withdraw": {
+      "value_reaches_recipient": false,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_helper::extract_no_transfer": {
+      "value_reaches_recipient": false,
+      "is_helper_function": false
+    },
+    "test::missing_transfer::withdraw_missing": {
+      "value_reaches_recipient": false,
+      "is_helper_function": false
+    },
+    "test::missing_transfer::withdraw_split_missing": {
+      "value_reaches_recipient": false,
+      "is_helper_function": false
+    },
+    "test::missing_transfer::withdraw_via_helper": {
+      "value_reaches_recipient": false,
+      "is_helper_function": false
+    },
+    "test::missing_transfer::withdraw_and_redeposit": {
+      "value_reaches_recipient": true,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_entry::withdraw_cross_module": {
+      "value_reaches_recipient": false,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_ipa_vuln::withdraw": {
+      "value_reaches_recipient": false,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_ipa_vuln::withdraw_two_hop": {
+      "value_reaches_recipient": false,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_hop_a::initiate_withdrawal": {
+      "value_reaches_recipient": false,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_hop_b::process_withdrawal": {
+      "value_reaches_recipient": false,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_hop_c::execute_extraction": {
+      "value_reaches_recipient": false,
+      "is_helper_function": false
+    },
+    "test::fqn_collision_b::withdraw": {
+      "value_reaches_recipient": true,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_ipa_safe::withdraw": {
+      "value_reaches_recipient": true,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_ipa_safe::withdraw_split_responsibility": {
+      "value_reaches_recipient": true,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_helper::extract_and_return": {
+      "value_reaches_recipient": true,
+      "is_helper_function": true
+    },
+    "test::missing_transfer_entry::withdraw_cross_module_safe": {
+      "value_reaches_recipient": true,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_edge::withdraw_balance_split": {
+      "value_reaches_recipient": false,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_edge::withdraw_all_no_transfer": {
+      "value_reaches_recipient": false,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_edge::from_balance_no_transfer": {
+      "value_reaches_recipient": false,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_edge::partial_transfer": {
+      "value_reaches_recipient": false,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_edge::conditional_transfer_one_branch": {
+      "value_reaches_recipient": false,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_edge::nested_extraction": {
+      "value_reaches_recipient": false,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_edge::balance_split_safe": {
+      "value_reaches_recipient": true,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_edge::all_transferred": {
+      "value_reaches_recipient": true,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_edge::conditional_both_transfer": {
+      "value_reaches_recipient": true,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_safe_hop_a::initiate_safe_withdrawal": {
+      "value_reaches_recipient": true,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_safe_hop_b::process_safe_withdrawal": {
+      "value_reaches_recipient": true,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_safe_hop_c::execute_safe_extraction": {
+      "value_reaches_recipient": true,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_deep::deep_withdraw": {
+      "value_reaches_recipient": false,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_deep::deep_withdraw_safe": {
+      "value_reaches_recipient": true,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_diamond::diamond_one_branch_leaks": {
+      "value_reaches_recipient": false,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_diamond::diamond_both_branches_leak": {
+      "value_reaches_recipient": false,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_diamond::diamond_both_branches_safe": {
+      "value_reaches_recipient": true,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_diamond::diamond_mixed_branches": {
+      "value_reaches_recipient": false,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_conditional::conditional_extract_no_transfer": {
+      "value_reaches_recipient": false,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_conditional::extract_in_else_no_transfer": {
+      "value_reaches_recipient": false,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_conditional::both_branches_extract_no_transfer": {
+      "value_reaches_recipient": false,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_conditional::conditional_extract_with_transfer": {
+      "value_reaches_recipient": true,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_conditional::both_branches_extract_and_transfer": {
+      "value_reaches_recipient": true,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_conditional::if_transfers_else_leaks": {
+      "value_reaches_recipient": false,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_wrapper::extract_wrap_transfer": {
+      "value_reaches_recipient": true,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_wrapper::extract_store_in_shared": {
+      "value_reaches_recipient": false,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_wrapper::extract_emit_only": {
+      "value_reaches_recipient": false,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_wrapper::extract_deposit_wrong_pool": {
+      "value_reaches_recipient": false,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_wrapper::extract_redeposit_same_pool": {
+      "value_reaches_recipient": true,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_wrapper::wrap_but_no_transfer": {
+      "value_reaches_recipient": false,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_generic::withdraw_generic": {
+      "value_reaches_recipient": false,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_generic::withdraw_sui_from_generic": {
+      "value_reaches_recipient": false,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_generic::withdraw_generic_safe": {
+      "value_reaches_recipient": true,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_generic::withdraw_generic_returns": {
+      "value_reaches_recipient": true,
+      "is_helper_function": true
+    },
+    "test::missing_transfer_generic::withdraw_first": {
+      "value_reaches_recipient": false,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_generic::withdraw_second": {
+      "value_reaches_recipient": false,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_generic::withdraw_both_safe": {
+      "value_reaches_recipient": true,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_return::returns_coin": {
+      "value_reaches_recipient": true,
+      "is_helper_function": true
+    },
+    "test::missing_transfer_return::returns_balance": {
+      "value_reaches_recipient": true,
+      "is_helper_function": true
+    },
+    "test::missing_transfer_return::returns_coin_tuple": {
+      "value_reaches_recipient": true,
+      "is_helper_function": true
+    },
+    "test::missing_transfer_return::returns_option_coin": {
+      "value_reaches_recipient": true,
+      "is_helper_function": true
+    },
+    "test::missing_transfer_return::extracts_returns_amount": {
+      "value_reaches_recipient": false,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_return::extracts_returns_bool": {
+      "value_reaches_recipient": false,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_return::entry_extracts_no_transfer": {
+      "value_reaches_recipient": false,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_return::entry_extracts_with_transfer": {
+      "value_reaches_recipient": true,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_recursive_a::withdraw_via_cycle": {
+      "value_reaches_recipient": false,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_recursive_a::extract_helper": {
+      "value_reaches_recipient": false,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_recursive_a::withdraw_via_cycle_safe": {
+      "value_reaches_recipient": true,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_recursive_a::extract_helper_safe": {
+      "value_reaches_recipient": true,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_recursive_b::process": {
+      "value_reaches_recipient": false,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_recursive_b::process_safe": {
+      "value_reaches_recipient": true,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_loop::loop_extract_no_transfer": {
+      "value_reaches_recipient": false,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_loop::loop_extract_with_transfer": {
+      "value_reaches_recipient": true,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_loop::loop_extract_single_transfer_after": {
+      "value_reaches_recipient": false,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_loop::loop_accumulate_then_transfer": {
+      "value_reaches_recipient": true,
+      "is_helper_function": false
+    }
+  }
+}

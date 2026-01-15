@@ -1,0 +1,216 @@
+{
+  "UnifiedClassify": {
+    "test::module_b::Vault": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": true,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [
+        "balance",
+        "data"
+      ],
+      "privileged_fields": [
+        "owner"
+      ],
+      "lock_fields": []
+    },
+    "test::module_b::AdminCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::module_a::Vault": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": true,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [
+        "balance",
+        "data"
+      ],
+      "privileged_fields": [
+        "owner"
+      ],
+      "lock_fields": []
+    },
+    "test::vault_module::Vault": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": true,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [
+        "balance",
+        "data"
+      ],
+      "privileged_fields": [
+        "owner"
+      ],
+      "lock_fields": []
+    },
+    "test::cross_user_asset_theft_ipa::Vault": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": true,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [
+        "balance",
+        "data"
+      ],
+      "privileged_fields": [
+        "owner"
+      ],
+      "lock_fields": []
+    },
+    "test::cross_user_asset_theft_ipa::AdminCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::claim_on_behalf::RewardRegistry": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": true,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [
+        "pending_rewards",
+        "reward_pool"
+      ],
+      "privileged_fields": [
+        "owner"
+      ],
+      "lock_fields": []
+    },
+    "test::claim_on_behalf::UserVault": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": true,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [
+        "balance"
+      ],
+      "privileged_fields": [
+        "owner"
+      ],
+      "lock_fields": []
+    }
+  },
+  "AccessControlClassify": {
+    "test::module_b::withdraw_from_vault": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Vulnerable function in cross-user-asset-theft"
+    },
+    "test::module_b::withdraw_admin": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Safe function with proper access control"
+    },
+    "test::module_b::steal_from_module_a": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Vulnerable function in cross-user-asset-theft"
+    },
+    "test::theft_module::steal_cross_module": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Vulnerable function in cross-user-asset-theft"
+    },
+    "test::theft_module::withdraw_safe_cross_module": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Safe function with proper access control"
+    },
+    "test::theft_module::get_vault_balance": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Safe function with proper access control"
+    },
+    "test::module_a::steal_from_vault": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Vulnerable function in cross-user-asset-theft"
+    },
+    "test::module_a::withdraw_safe": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Safe function with proper access control"
+    },
+    "test::module_a::deposit": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Safe function with proper access control"
+    },
+    "test::vault_module::deposit": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Safe function with proper access control"
+    },
+    "test::cross_user_asset_theft_ipa::steal_via_helper": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Vulnerable function in cross-user-asset-theft"
+    },
+    "test::cross_user_asset_theft_ipa::steal_direct": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Vulnerable function in cross-user-asset-theft"
+    },
+    "test::cross_user_asset_theft_ipa::withdraw_safe": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Safe function with proper access control"
+    },
+    "test::cross_user_asset_theft_ipa::withdraw_admin": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Safe function with proper access control"
+    },
+    "test::cross_user_asset_theft_ipa::deposit": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Safe function with proper access control"
+    },
+    "test::claim_on_behalf::claim_reward_for": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "FP: This is claim-on-behalf pattern but LLM incorrectly flags it"
+    },
+    "test::claim_on_behalf::steal_rewards": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "TP: Attacker can steal other users rewards"
+    }
+  }
+}

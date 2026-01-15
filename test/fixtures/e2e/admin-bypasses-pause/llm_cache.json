@@ -1,0 +1,112 @@
+{
+  "UnifiedClassify": {
+    "test::pause_protocol::Config": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": true,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::pause_protocol::Pool": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": true,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": ["balance"],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::pause_protocol::AdminCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::pause_caller::Config": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": true,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::pause_caller::Pool": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": true,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": ["balance"],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::pause_caller::AdminCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::config_setter::Config": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": true,
+      "is_state_container": false,
+      "config_fields": ["fee_rate", "supply_cap", "borrow_cap", "ltv"],
+      "mutable_config_fields": ["fee_rate", "supply_cap", "borrow_cap", "ltv"],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::config_setter::AdminCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    }
+  },
+  "pause": {
+    "has_pause": true,
+    "confidence": 1.0,
+    "pause_struct": "test::pause_protocol::Config",
+    "pause_field": "paused",
+    "check_functions": [
+      "test::pause_protocol::admin_withdraw_with_pause",
+      "test::pause_protocol::do_withdraw_checked",
+      "test::pause_helper::withdraw_with_check"
+    ],
+    "control_functions": []
+  }
+}

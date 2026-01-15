@@ -1,0 +1,106 @@
+{
+  "UnifiedClassify": {
+    "test::state_mod::Storage": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": true,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": ["version"],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::state_mod::AdminCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::state_mod::AssetRegistry": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": true,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": ["assets"],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::state_mod::UserAsset": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": true,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::state_mod::PrivConfig": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": true,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": ["admin"],
+      "state_fields": [],
+      "privileged_fields": ["admin"],
+      "lock_fields": []
+    }
+  },
+  "AccessControlClassify": {
+    "test::state_mod::set_value_unsafe": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "User controls value written to shared state - no access control"
+    },
+    "test::state_mod::set_data_unsafe": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "User controls both key and data written to state - no access control"
+    },
+    "test::state_mod::set_value_via_helper": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Entry calls helper with tainted value for state write"
+    },
+    "test::state_mod::set_value_with_sender": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Protected by sender equality check"
+    },
+    "test::state_mod::set_value_with_role": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Protected by AdminCap role check"
+    },
+    "test::state_mod::set_value_via_guarded_helper": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Calls helper with sender check guard"
+    },
+    "test::state_mod::create_and_register_asset": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "FP test: LLM incorrectly classifies as vulnerable"
+    },
+    "test::state_mod::create_and_corrupt": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "FN test: creates user asset BUT also corrupts config"
+    }
+  }
+}

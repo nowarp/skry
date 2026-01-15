@@ -1,0 +1,42 @@
+{
+  "UnifiedClassify": {
+    "test::capability_leak_via_store::AdminCap": {
+      "is_role": true,
+      "is_event": false,
+      "is_config": false,
+      "is_state_container": false
+    },
+    "test::capability_leak_via_store::OperatorCap": {
+      "is_role": true,
+      "is_event": false,
+      "is_config": false,
+      "is_state_container": false
+    },
+    "test::capability_leak_via_store::SharedVault": {
+      "is_role": false,
+      "is_event": false,
+      "is_config": false,
+      "is_state_container": true
+    },
+    "test::capability_leak_via_store::SharedConfig": {
+      "is_role": false,
+      "is_event": false,
+      "is_config": true,
+      "is_state_container": false
+    },
+    "test::safe_patterns::SafeCap": {
+      "is_role": true,
+      "is_event": false,
+      "is_config": false,
+      "is_state_container": false
+    },
+    "test::safe_patterns::SharedPool": {
+      "is_role": false,
+      "is_event": false,
+      "is_config": false,
+      "is_state_container": true
+    }
+  },
+  "functions": {},
+  "fields": {}
+}

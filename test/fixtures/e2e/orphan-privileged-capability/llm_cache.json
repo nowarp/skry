@@ -1,0 +1,53 @@
+{
+  "UnifiedClassify": {
+    "test::orphan_privileged_safe::AdminCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false
+    },
+    "test::orphan_privileged_safe::ModeratorCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false
+    },
+    "test::orphan_privileged_capability::SuperAdminCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false
+    },
+    "test::orphan_privileged_capability::RegularAdminCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false
+    },
+    "test::orphan_privileged_capability::Pool": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": true
+    },
+    "test::fqn_collision_a::MasterCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false
+    },
+    "test::fqn_collision_b::MasterCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{% if struct_sources %}
+## TYPES (`key`=owned, `key+store`=transferable)
+{% for type_name, struct_src in struct_sources.items() %}
+```move
+{{ struct_src }}
+```
+{% endfor %}
+{% endif %}
+
+## ENTRY: {{ func_name }}
+{% if entry_docstring %}
+{{ entry_docstring }}
+{% endif %}
+```move
+{{ entry_source }}
+```
+
+{% if callee_sources %}
+## CALLEES:
+{% for callee, callee_source in callee_sources.items() %}
+### {{ callee }}
+```move
+{{ callee_source }}
+```
+{% endfor %}
+{% endif %}
+
+## SINKS: {{ sink_types | sort | join(', ') }}
+
+## TASK
+Analyze this function for access control vulnerabilities.
+
+FIRST, check for ACCESS CONTROL mechanisms:
+- Does the function verify caller identity before performing sensitive operations?
+- Look for: assert!/abort conditions comparing tx_context::sender() against stored addresses
+- Look for: any conditional checks that gate execution based on caller identity
+- If ANY access control mechanism exists, set has_access_control=true
+
+## RULES
+- `&mut OwnedObject` (has `key`): only owner can call → SAFE
+- `&mut SharedObject` (Registry/Pool/Config): needs capability/sender check
+- User deposits own value (Coin/Balance/NFT passed by value) → SAFE
+- Missing auth on shared state or arbitrary transfer → VULNERABLE
+
+Is this function VULNERABLE or SAFE?

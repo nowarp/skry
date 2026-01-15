@@ -1,0 +1,59 @@
+## FUNCTION: {{ func_name }}{{ category_hint }}
+{% if entry_docstring %}
+{{ entry_docstring }}
+{% endif %}
+```move
+{{ entry_source }}
+```
+
+{% if callee_sources %}
+## CALLEES:
+{% for callee, callee_source in callee_sources.items() %}
+### {{ callee }}
+```move
+{{ callee_source }}
+```
+{% endfor %}
+{% endif %}
+
+{% if hidden_sinks or hidden_assertions %}
+## DEEP CALL CHAIN INFO (not shown above)
+{% if hidden_sinks %}
+Sinks:
+{% for sink_type, func in hidden_sinks[:5] %}
+  - {{ sink_type }} in {{ func }}
+{% endfor %}
+{% endif %}
+{% if hidden_assertions %}
+Assertions:
+{% for var, func in hidden_assertions[:5] %}
+  - `{{ var }}` checked in {{ func }}
+{% endfor %}
+{% endif %}
+{% endif %}
+
+## TASK
+Analyze this Move function for missing transfer vulnerability.
+
+Context: This function extracts value (via coin::take, balance::split, etc.) but has no transfer call.
+
+Determine if this is ACTUALLY VULNERABLE or a FALSE POSITIVE:
+
+VULNERABLE (value lost/stolen):
+- Value is extracted but never transferred to any recipient
+- Extracted value is stored in contract state but user loses access
+- Function burns/destroys extracted value inappropriately
+- Extracted Coin is dropped without being used
+
+FALSE POSITIVE (safe patterns):
+- Function RETURNS the extracted Coin/Balance to caller (return value)
+- Value is transferred in a CALLEE function (follow the call chain)
+- Value is REDEPOSITED back into a balance (coin::put, balance::join, balance::deposit, etc.)
+- Extracted value is put back into the SAME or DIFFERENT pool/balance (not lost)
+- This is a helper function that extracts value for caller to transfer
+
+Key questions:
+1. Does the extracted value eventually reach a recipient or get returned?
+2. Is the extracted coin/balance redeposited via coin::put() or balance::join()?
+
+Answer:

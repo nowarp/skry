@@ -1,0 +1,82 @@
+{
+  "UnifiedClassify": {
+    "test::single_step_ownership::AdminCap": {
+      "is_role": true,
+      "is_asset": false,
+      "is_event": false,
+      "is_privileged": true,
+      "reasoning": "Admin capability for protocol control"
+    },
+    "test::safe_two_step::AdminCap": {
+      "is_role": true,
+      "is_asset": false,
+      "is_event": false,
+      "is_privileged": true,
+      "reasoning": "Admin capability for protocol control"
+    },
+    "test::safe_two_step::AdminState": {
+      "is_role": false,
+      "is_asset": false,
+      "is_event": false,
+      "is_privileged": false,
+      "is_state_container": true,
+      "reasoning": "State container for pending admin"
+    },
+    "test::ipa_chain::AdminCap": {
+      "is_role": true,
+      "is_asset": false,
+      "is_event": false,
+      "is_privileged": true,
+      "reasoning": "Admin capability for protocol control"
+    },
+    "test::safe_patterns::AdminCap": {
+      "is_role": true,
+      "is_asset": false,
+      "is_event": false,
+      "is_privileged": true,
+      "reasoning": "Admin capability for protocol control"
+    },
+    "test::safe_patterns::AuthCap": {
+      "is_role": true,
+      "is_asset": false,
+      "is_event": false,
+      "is_privileged": true,
+      "reasoning": "Authorization capability"
+    },
+    "test::cross_cap::AdminCap": {
+      "is_role": true,
+      "is_asset": false,
+      "is_event": false,
+      "is_privileged": true,
+      "reasoning": "Admin capability for protocol control"
+    },
+    "test::fqn_a::AdminCap": {
+      "is_role": true,
+      "is_asset": false,
+      "is_event": false,
+      "is_privileged": true,
+      "reasoning": "Privileged admin capability"
+    },
+    "test::fqn_b::AdminCap": {
+      "is_role": false,
+      "is_asset": true,
+      "is_event": false,
+      "is_privileged": false,
+      "reasoning": "User token, NOT a privileged capability"
+    },
+    "test::hop_a::AdminCap": {
+      "is_role": true,
+      "is_asset": false,
+      "is_event": false,
+      "is_privileged": true,
+      "reasoning": "Admin capability for A->B->C chain test"
+    },
+    "test::friend_vis::AdminCap": {
+      "is_role": true,
+      "is_asset": false,
+      "is_event": false,
+      "is_privileged": true,
+      "reasoning": "Admin capability for friend visibility test"
+    }
+  }
+}

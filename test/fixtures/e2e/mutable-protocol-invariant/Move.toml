@@ -1,0 +1,9 @@
+[package]
+name = "mutable_protocol_invariant"
+edition = "2024.beta"
+
+[dependencies]
+Sui = { local = "../_infrastructure/sui-framework/packages/sui-framework" }
+
+[addresses]
+test = "0x0"

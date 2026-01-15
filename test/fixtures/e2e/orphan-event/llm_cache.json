@@ -1,0 +1,60 @@
+{
+  "UnifiedClassify": {
+    "test::orphan_event_safe::ActionEvent": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false
+    },
+    "test::orphan_event_safe::CompletionEvent": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false
+    },
+    "test::orphan_event::UnusedEvent": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false
+    },
+    "test::orphan_event::AnotherUnusedEvent": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false
+    },
+    "test::orphan_event::WithdrawEvent": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false
+    },
+    "test::orphan_event::DepositEvent": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false
+    },
+    "test::fqn_collision_a::StatusEvent": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false
+    },
+    "test::fqn_collision_b::StatusEvent": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false
+    }
+  }
+}

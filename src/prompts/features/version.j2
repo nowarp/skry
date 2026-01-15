@@ -1,0 +1,41 @@
+Does this Sui project use VERSION CONTROL for upgrades?
+
+## Pattern
+Versioning = shared object with `version: u64` field + functions/methods that assert version matches expected.
+
+Two common patterns:
+1. Standalone check function: `version_check(config)` or `assert_version(v)`
+2. Method call on Version object: `version.verify_version(V)` or `version.verify_authority(ctx)`
+
+## Project: {{ project_name }}
+
+### Structs with "version" in name or version field:
+{% if structs %}
+{% for s in structs %}
+### {{ s.name }}{% if s.has_version_field %} [HAS version: u64 FIELD]{% endif %}
+
+```move
+{{ s.source }}
+```
+{% endfor %}
+{% else %}
+(none found)
+{% endif %}
+
+### Version-related functions:
+{% if functions %}
+{% for f in functions %}
+- {{ f.signature }}
+{% endfor %}
+{% else %}
+(none found)
+{% endif %}
+
+### Version constants:
+{% if constants %}
+{% for c in constants %}
+- const {{ c.name }}: {{ c.type }} = {{ c.value }}
+{% endfor %}
+{% else %}
+(none found)
+{% endif %}

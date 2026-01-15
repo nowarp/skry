@@ -1,0 +1,52 @@
+Analyze these Move struct fields for SENSITIVE DATA that should NOT be publicly visible.
+
+Sensitive categories:
+- trust: private keys, seeds, salts, secrets, passwords, credentials, auth tokens
+- PII: personal identifiable information (names, emails, addresses)
+- financial: internal accounting values, fee configs that could be exploited
+- availability: pause flags, lock states, rate limits that control access
+- economic: prices, rates, slippage parameters that affect trades
+
+NOT sensitive (OK to expose):
+- Public keys, addresses (when meant to be public)
+- Balances, amounts (usually public on-chain)
+- Timestamps, IDs, counters
+- Status flags, enums
+
+Fields to analyze:
+
+{% for struct_name, struct_fields in fields_by_struct.items() %}
+{% if struct_comments.get(struct_name) %}
+// {{ struct_comments[struct_name] }}
+{% endif %}
+struct {{ struct_name }} {
+{% for f in struct_fields %}
+{% if f.field_comment %}
+    // {{ f.field_comment }}
+{% endif %}
+    {{ f.field_name }}: {{ f.field_type }},
+{% endfor %}
+}
+
+{% endfor %}
+{% if func_contexts %}
+## Field Usage Context
+(How these fields are accessed in code)
+
+{% for struct_name, context in func_contexts.items() %}
+### {{ struct_name | simple_name }}
+{{ context }}
+
+{% endfor %}
+{% endif %}
+For EACH sensitive field, respond with JSON objects containing:
+- field: full field key (struct::field_name)
+- reason: category (trust, PII, financial, availability, economic)
+- confidence: 0.0-1.0 (how certain you are)
+
+If NO fields are sensitive, respond with: []
+
+Example response:
+[{"field": "mod::Struct::secret", "reason": "trust", "confidence": 0.95}]
+
+JSON array:

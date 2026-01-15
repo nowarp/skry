@@ -1,0 +1,132 @@
+{
+  "FeatureVersion": {
+    "has_versioning": true,
+    "confidence": 1.0,
+    "version_struct": "Pool",
+    "version_check_functions": ["test::version_check::verify_version", "test::version_check_safe::verify_version", "test::version_check_ipa_safe::verify_version", "test::version_check_ipa_vuln::verify_version", "test::version_check_helper::verify_version"],
+    "version_check_methods": ["verify_version", "assert_version", "check_version"]
+  },
+  "UnifiedClassify": {
+    "test::fqn_collision_a::Config": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": true,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::version_check_helper::Pool": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": true,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [
+        "balance"
+      ],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::version_check_ipa_safe::Pool": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": true,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [
+        "balance"
+      ],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::version_check_safe::Pool": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": true,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [
+        "balance"
+      ],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::version_check::Pool": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": true,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [
+        "balance"
+      ],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::fqn_collision_b::Config": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": true,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::version_check_ipa_vuln::Pool": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": true,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [
+        "balance"
+      ],
+      "privileged_fields": [],
+      "lock_fields": []
+    }
+  },
+  "AccessControlClassify": {
+    "test::fqn_collision_a::update_unchecked": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Vulnerable function in version-check-missing"
+    },
+    "test::version_check::deposit": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Vulnerable function in version-check-missing"
+    },
+    "test::version_check::transfer_funds": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Vulnerable function in version-check-missing"
+    },
+    "test::version_check_entry::process_without_check": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Vulnerable function in version-check-missing"
+    },
+    "test::version_check_ipa_vuln::withdraw_unchecked": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Vulnerable function in version-check-missing"
+    }
+  }
+}

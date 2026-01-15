@@ -1,0 +1,76 @@
+{
+  "UnifiedClassify": {
+    "test::missing_admin_event::AdminCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::missing_admin_event::Protocol": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": true,
+      "config_fields": ["fee_rate"],
+      "mutable_config_fields": ["fee_rate"],
+      "state_fields": ["fee_balance", "paused"],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::missing_admin_event_safe::AdminCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::missing_admin_event_safe::Protocol": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": true,
+      "config_fields": ["fee_rate"],
+      "mutable_config_fields": ["fee_rate"],
+      "state_fields": ["fee_balance", "paused"],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::missing_admin_event_safe::FeesWithdrawn": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::missing_admin_event_safe::FeeRateChanged": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    }
+  }
+}

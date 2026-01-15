@@ -1,0 +1,57 @@
+## FUNCTION: {{ func_name }}{{ category_hint }}
+{% if entry_docstring %}
+{{ entry_docstring }}
+{% endif %}
+```move
+{{ entry_source }}
+```
+
+{% if callee_sources %}
+## CALLEES:
+{% for callee, callee_source in callee_sources.items() %}
+### {{ callee }}
+```move
+{{ callee_source }}
+```
+{% endfor %}
+{% endif %}
+
+{% if hidden_sinks or hidden_assertions %}
+## DEEP CALL CHAIN INFO (not shown above)
+{% if hidden_sinks %}
+Sinks:
+{% for sink_type, func in hidden_sinks[:5] %}
+  - {{ sink_type }} in {{ func }}
+{% endfor %}
+{% endif %}
+{% if hidden_assertions %}
+Assertions:
+{% for var, func in hidden_assertions[:5] %}
+  - `{{ var }}` checked in {{ func }}
+{% endfor %}
+{% endif %}
+{% endif %}
+
+## TASK
+Analyze this Move function for arbitrary recipient drain vulnerability.
+
+Context: This function transfers value to a user-controlled address without role-based auth.
+
+Determine if this is ACTUALLY VULNERABLE or a FALSE POSITIVE:
+
+VULNERABLE (real drain): Attacker can steal funds that belong to OTHER users or the protocol.
+- Example: transfer(pool.balance, attacker_address) - drains shared pool to arbitrary recipient
+- Admin extracts user funds to arbitrary address (not the asset owner)
+
+FALSE POSITIVE (safe patterns):
+- User withdraws/unwraps their OWN funds to chosen address (burn from sender, then transfer)
+- User transfers their OWN assets/coins to another address they control
+- The transferred value comes FROM the caller (ctx.sender), not from shared state
+- Admin returns funds to the ORIGINAL OWNER (e.g., transfer(coins, vault.owner) where vault belongs to that owner)
+- Emergency withdrawal that sends assets back to their rightful owner field
+
+Key questions:
+1. Can the caller only transfer value they themselves own/deposited?
+2. If this is admin-gated, does it transfer funds back to the original asset owner (check for owner/user fields)?
+
+Answer:

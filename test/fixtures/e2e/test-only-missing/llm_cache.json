@@ -1,0 +1,191 @@
+{
+  "UnifiedClassify": {
+    "test::test_only_missing::AdminCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::test_only_missing::Vault": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": true,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": ["balance"],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::cap_module::AdminCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::module_a::AdminCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::module_b::AdminCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::deep_ipa::DeepCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::ipa_level_c::IpaCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::test_only_wrapper::WrapperCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::friend_cap::FriendCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::reexport_c::ReexportCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    }
+  },
+  "AccessControlClassify": {
+    "test::test_only_missing::create_admin_cap_for_testing": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Public test helper returns AdminCap without #[test_only]"
+    },
+    "test::test_only_missing::create_cap_via_helper": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Public function returns AdminCap via helper without auth"
+    },
+    "test::wrapper_module::get_admin_cap": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Returns privileged cap from another module without auth"
+    },
+    "test::module_a::create_admin_cap": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Public function returns AdminCap without #[test_only]"
+    },
+    "test::deep_ipa::get_deep_cap": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Public function returns privileged cap via 3-level chain"
+    },
+    "test::ipa_level_c::create": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Public function creates and returns privileged cap"
+    },
+    "test::ipa_level_b::wrap": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Public function returns privileged cap from another module"
+    },
+    "test::ipa_level_a::get_cap": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Public function returns privileged cap via cross-module chain"
+    },
+    "test::test_only_wrapper::create_raw": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Public function returns privileged cap without #[test_only]"
+    },
+    "test::friend_cap::expose_friend": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Public function exposes package-internal privileged cap creator"
+    },
+    "test::reexport_a::get_cap": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Public function returns privileged cap via re-export chain"
+    },
+    "test::reexport_b::wrap": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Public wrapper returns privileged cap"
+    },
+    "test::reexport_c::create": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Public function creates privileged cap without auth"
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "UnifiedClassify": {
+    "test::capability_takeover::AdminCap": {
+      "is_role": true,
+      "is_event": false,
+      "is_config": false,
+      "is_state_container": false
+    },
+    "test::capability_takeover::TreasuryCap": {
+      "is_role": true,
+      "is_event": false,
+      "is_config": false,
+      "is_state_container": false
+    },
+    "test::capability_takeover::UserData": {
+      "is_role": false,
+      "is_event": false,
+      "is_config": false,
+      "is_state_container": false
+    }
+  },
+  "functions": {},
+  "fields": {}
+}

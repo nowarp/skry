@@ -1,0 +1,69 @@
+Does this Sui project have a GLOBAL PAUSE mechanism?
+
+## What is Global Pause?
+A protocol-wide emergency stop that:
+- Is controlled by admin (requires capability to toggle)
+- Lives in a SHARED config/state object (affects all users)
+- Is checked by multiple sensitive functions before operating
+- Single source of truth (one field controls pause state)
+
+NOT global pause:
+- Per-object locks (offer.is_locked, position.frozen)
+- User-controlled state flags
+- Local reentrancy guards
+
+## Project: {{ project_name }}
+
+### Structs with bool fields:
+{% if structs %}
+{% for s in structs %}
+### {{ s.name }}{% if s.is_shared %} [SHARED{% if s.is_config %}, CONFIG{% endif %}{% if s.bool_fields %}, bool fields: {{ s.bool_fields | join(', ') }}{% endif %}]{% endif %}
+
+```move
+{{ s.source }}
+```
+{% endfor %}
+{% else %}
+(none found)
+{% endif %}
+
+### Pause-related functions:
+{% if functions %}
+{% for f in functions %}
+{% if f.source %}
+### {{ f.name }}{% if f.requires_cap %} [REQUIRES CAP]{% endif %}
+
+```move
+{{ f.source }}
+```
+{% else %}
+- {{ f.signature }}{% if f.requires_cap %} [REQUIRES CAP]{% endif %}
+
+{% endif %}
+{% endfor %}
+{% else %}
+(none found)
+{% endif %}
+
+### Pause constants:
+{% if constants %}
+{% for c in constants %}
+- const {{ c.name }}: {{ c.type }} = {{ c.value }}
+{% endfor %}
+{% else %}
+(none found)
+{% endif %}
+
+## Your Task:
+1. Identify if there is a GLOBAL pause mechanism (bool field in shared/config struct)
+2. If YES, identify:
+   - pause_struct: The struct holding the pause state
+   - pause_field: The field name (e.g., "paused", "is_paused")
+   - check_functions: Functions that READ and CHECK the pause field (e.g., assert!(!config.paused))
+   - control_functions: Functions that WRITE/TOGGLE the pause field (e.g., config.paused = true)
+
+IMPORTANT for check_functions:
+- Include functions that have assertions like: assert!(!config.paused, ...)
+- Include functions that read the pause field in conditionals
+- Look for patterns: !struct.field, struct.field == false, etc.
+- These are functions that ENFORCE the pause (not control it)

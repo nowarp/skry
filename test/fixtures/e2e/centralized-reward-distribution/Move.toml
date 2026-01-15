@@ -1,0 +1,10 @@
+[package]
+name = "test"
+version = "0.0.1"
+edition = "2024.beta"
+
+[dependencies]
+Sui = { local = "../../../../third-party/sui/crates/sui-framework/packages/sui-framework" }
+
+[addresses]
+test = "0x0"

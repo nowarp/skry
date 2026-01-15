@@ -1,0 +1,55 @@
+{
+  "UnifiedClassify": {
+    "test::vulnerable_internal::AdminCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_event": false,
+      "is_config": false,
+      "is_state_container": false
+    },
+    "test::vulnerable_internal::Vault": {
+      "is_role": false,
+      "is_event": false,
+      "is_config": false,
+      "is_state_container": true
+    },
+    "test::safe_internal::AdminCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_event": false,
+      "is_config": false,
+      "is_state_container": false
+    },
+    "test::safe_internal::VaultCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_event": false,
+      "is_config": false,
+      "is_state_container": false
+    },
+    "test::safe_internal::Vault": {
+      "is_role": false,
+      "is_event": false,
+      "is_config": false,
+      "is_state_container": true
+    }
+  },
+  "InternalHelperExposureClassify": {
+    "test::vulnerable_internal::do_withdraw": {
+      "is_internal_helper": true,
+      "reason": "Low-level balance extraction helper called through authorized admin_withdraw wrapper"
+    },
+    "test::vulnerable_internal::update_reserve_index": {
+      "is_internal_helper": true,
+      "reason": "State mutation helper wrapped by capability-checked admin_update_index entry point"
+    },
+    "test::vulnerable_internal::join_vault_balance": {
+      "is_internal_helper": true,
+      "reason": "Balance join helper designed for internal use through deposit_to_vault"
+    },
+    "test::vulnerable_internal::bottom_helper": {
+      "is_internal_helper": true,
+      "reason": "Bottom of multi-hop call chain - balance extraction helper called via middle_helper from admin_action"
+    }
+  }
+}

@@ -1,0 +1,7 @@
+# Apparently, they removed the convinient API in the next versions:
+# https://github.com/tree-sitter/py-tree-sitter/discussions/241
+tree-sitter==0.21.3
+lark==1.1.9
+requests>=2.31.0
+hy>=1.0.0
+jinja2>=3.1.0

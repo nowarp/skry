@@ -1,0 +1,100 @@
+## Struct Definition
+{% if struct_comment %}
+// {{ struct_comment }}
+{% endif %}
+{{ struct_source }}
+
+{{ creation_section }}
+{{ setters_section }}
+{% if func_context and func_context != "(No functions use this struct)" %}
+
+## Functions Using This Struct
+{{ func_context }}
+{% endif %}
+
+## Classification Questions for {{ simple_name }}
+
+### Struct Classification
+Answer true/false:
+
+1. **is_role**: Is this a capability/permission struct that gates access?
+   - Examples: AdminCap, OwnerCap, MinterBadge, Witness
+   - Also includes compound names: WeightHookAdminCap, RegistryOwnerCap, etc.
+   - Has `key` ability, represents authorization
+   - Used as parameter in functions to restrict access
+   - May use phantom type parameters (e.g., Cap<phantom T>)
+
+2. **is_privileged**: Is this admin-controlled?
+   - YES if: created in init → transferred to sender (deployer keeps it)
+   - YES if: AdminCap, OwnerCap, TreasuryCap
+   - NO if: given to users, shared, or frozen
+
+3. **is_user_asset**: Is this a user-owned asset?
+   - Examples: Receipt, Ticket, Position, NFT
+   - Owned by users, not protocol storage
+
+4. **is_config**: Is this a protocol configuration struct?
+   - YES: Protocol-wide parameters affecting system behavior
+     * Fee rates, limits, protocol addresses
+     * Key test: Would unauthorized modification cause loss of funds?
+
+   - NO: Runtime state tracking
+     * Counters, balances, timestamps
+     * Registries, pools, vaults
+
+   - IMPORTANT: If is_state_container=true, then is_config=false
+
+5. **is_state_container**: Is this a shared state container?
+   - YES if ALL:
+     * Shared object (see Creation Sites -> shared)
+     * Holds mutable runtime data (deposits, items, round state)
+     * Contains Table/VecMap/Bag/vector for dynamic data
+     * Examples: Pool, Registry, Vault, RoundState
+
+   - NO if:
+     * Not shared
+     * Config-only struct
+     * Pure role/capability
+
+### Field Classification
+Return arrays of objects: {"name": "field_name", "confidence": 0.0-1.0}
+Use empty array if none match.
+
+6. **config_fields**: IMMUTABLE config values (set once, never change)
+   - Token decimals, symbol, name
+   - Contract version, deployment timestamp
+   - Fields intentionally frozen after init
+   - NOT: values that need post-deployment tuning
+
+7. **mutable_config_fields**: Config values that SHOULD be adjustable by admin
+   - Fee rates, interest rates, protocol limits
+   - Admin/treasury addresses
+   - Protocol parameters needing post-deployment tuning
+   - Key test: Would protocol need to adjust this after launch?
+   - NOT: immutable config (decimals, symbol), NOT runtime state (balances)
+
+8. **state_fields**: Mutable runtime state
+   - Balances, counters, user data, timestamps
+   - Updated during normal operations
+   - NOT: config values, admin addresses
+
+9. **privileged_fields**: Privileged addresses (address type)
+
+10. **lock_fields**: Bool fields gating USER-TRIGGERED actions
+   - Per-object locks (offer.is_locked)
+   - NOT lifecycle flags (round.is_finalized)
+
+11. **protocol_invariant_fields**: Values users expect immutable BY DESIGN
+   - Conversion rates, exchange ratios, token decimals
+   - Changing would break user expectations/trust
+   - NOT: fees, limits, admin addresses (those need setters)
+
+## Self-Check Before Answering
+For each field you classify:
+- config_field: Is this intentionally immutable? If NO -> mutable_config_fields
+- mutable_config_field: Would protocol need to adjust this post-deployment? If NO -> don't classify
+- protocol_invariant_field: Would changing this break user trust/expectations? If NO -> don't classify
+- state_field: Is this updated during normal user operations? If NO -> don't classify
+- lock_field: Does this BLOCK user-triggered actions? If NO -> don't classify
+
+When uncertain, prefer empty list over false positive.

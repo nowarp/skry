@@ -1,0 +1,133 @@
+{
+  "UnifiedClassify": {
+    "test::vulnerable_pool::Pool": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": true,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": ["balance"],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::drain_safe_patterns::Pool": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": true,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": ["balance"],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::drain_safe_patterns::Vault": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": true,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": ["balance"],
+      "privileged_fields": ["owner"],
+      "lock_fields": []
+    },
+    "test::drain_safe_patterns::AdminCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::drain_safe_patterns::Receipt": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::cross_drain::Pool": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": true,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": ["balance"],
+      "privileged_fields": [],
+      "lock_fields": []
+    }
+  },
+  "AccessControlClassify": {
+    "test::vulnerable_pool::drain": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Anyone can drain pool to arbitrary recipient - no access control"
+    },
+    "test::vulnerable_pool::deposit": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Safe deposit operation - adds value to pool"
+    },
+    "test::drain_safe_patterns::withdraw_with_admin": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Protected by AdminCap - role-based access control"
+    },
+    "test::drain_safe_patterns::withdraw_owned": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Checks vault.owner == sender before withdrawal"
+    },
+    "test::drain_safe_patterns::transfer_my_coin": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "User provides their own coin - no shared state drain"
+    },
+    "test::drain_safe_patterns::withdraw_from_owned_vault": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Operates on owned object only - no shared state"
+    },
+    "test::drain_safe_patterns::transfer_receipt": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Receipt is user-creatable - no value drain"
+    },
+    "test::drain_safe_patterns::create_receipt": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Creates user receipt - no drain operation"
+    },
+    "test::drain_safe_patterns::deposit_own_funds": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Deposit operation - adds value, not draining"
+    },
+    "test::drain_safe_patterns::withdraw_my_vault": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Owner check and withdraws to self only"
+    },
+    "test::cross_drain::entry_drain": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Entry calls helper to drain pool to arbitrary recipient"
+    }
+  }
+}

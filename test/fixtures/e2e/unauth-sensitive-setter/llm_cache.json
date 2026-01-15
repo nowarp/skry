@@ -1,0 +1,64 @@
+{
+  "UnifiedClassify": {
+    "test::sensitive_setter::Settings": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": true,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [
+        "fee_rate",
+        "oracle",
+        "max_limit"
+      ],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::sensitive_setter::AdminCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    }
+  },
+  "AccessControlClassify": {
+    "test::sensitive_setter::set_fee": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Vulnerable function in unauth-sensitive-setter"
+    },
+    "test::sensitive_setter::set_oracle": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Vulnerable function in unauth-sensitive-setter"
+    },
+    "test::sensitive_setter::update_limit": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Vulnerable function in unauth-sensitive-setter"
+    },
+    "test::sensitive_setter::set_fee_admin": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Safe function with proper access control"
+    },
+    "test::sensitive_setter::set_fee_with_sender": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Safe function with proper access control"
+    },
+    "test::sensitive_setter::set_fee_internal": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Safe function with proper access control"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+[tool.ty.environment]
+python = "venv"
+extra-paths = ["/usr/lib/python3/dist-packages"]
+
+[tool.ruff]
+line-length = 120
+lint.select = ["E", "F", "W"]
+lint.ignore = ["E501", "E302", "E305", "C901"]
+
+[tool.pylsp.plugins.pycodestyle]
+enabled = true
+maxLineLength = 120
+ignore = ["E501", "E302", "E305", "W504"]
+
+[tool.pylsp.plugins.flake8]
+enabled = true
+maxLineLength = 120
+ignore = ["E501", "E302", "E305", "C901", "W504"]
+
+[tool.pylsp.plugins.mccabe]
+enabled = false
+
+[tool.pytest.ini_options]
+filterwarnings = [
+    "ignore::FutureWarning:tree_sitter",
+]
+testpaths = [
+    "test",
+]

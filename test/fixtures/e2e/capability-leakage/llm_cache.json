@@ -1,0 +1,158 @@
+{
+  "UnifiedClassify": {
+    "test::module_b::AdminCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::cap_module::AdminCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::module_a::AdminCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::capability_leakage_ipa::AdminCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::registry_return::Registry": {
+      "is_role": false,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::nested_generic_tuple::AdminCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    }
+  },
+  "AccessControlClassify": {
+    "test::module_b::get_admin_cap": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Safe function with proper access control"
+    },
+    "test::module_b::transfer_cap": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Safe function with proper access control"
+    },
+    "test::module_b::leak_other_module_cap": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Vulnerable function in capability-leakage"
+    },
+    "test::cap_module::create_admin_with_auth": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Safe function with proper access control"
+    },
+    "test::module_a::get_admin_cap": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Vulnerable function in capability-leakage"
+    },
+    "test::module_a::leak_admin_cap": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Vulnerable function in capability-leakage"
+    },
+    "test::module_a::create_admin_with_auth": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Safe function with proper access control"
+    },
+    "test::leak_module::leak_admin_cross_module": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Vulnerable function in capability-leakage"
+    },
+    "test::leak_module::get_admin_from_other_module": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Vulnerable function in capability-leakage"
+    },
+    "test::leak_module::create_admin_safe": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Safe function with proper access control"
+    },
+    "test::capability_leakage_ipa::leak_cap_via_helper": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Vulnerable function in capability-leakage"
+    },
+    "test::capability_leakage_ipa::get_admin_cap": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Vulnerable function in capability-leakage"
+    },
+    "test::capability_leakage_ipa::create_admin_safe": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Safe function with proper access control"
+    },
+    "test::nested_generic_tuple::create_with_nested_generic": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Returns privileged AdminCap in tuple with nested generic type"
+    },
+    "test::nested_generic_tuple::deeply_nested_generic": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Returns privileged AdminCap in tuple with Balance generic"
+    },
+    "test::nested_generic_tuple::nested_no_cap": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Returns non-privileged types only"
+    }
+  }
+}

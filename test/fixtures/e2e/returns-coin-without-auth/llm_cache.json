@@ -1,0 +1,16 @@
+{
+  "UnifiedClassify": {
+    "test::ptb_helper::Pool": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": true,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": ["balance", "user_balances"],
+      "privileged_fields": [],
+      "lock_fields": []
+    }
+  }
+}

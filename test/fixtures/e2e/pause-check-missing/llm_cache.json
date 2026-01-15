@@ -1,0 +1,112 @@
+{
+  "UnifiedClassify": {
+    "test::pause_protocol::Config": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": true,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::pause_protocol::Pool": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": true,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [
+        "balance"
+      ],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::pause_protocol::AdminCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    }
+  },
+  "AccessControlClassify": {
+    "test::pause_protocol::withdraw_no_pause": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Vulnerable function in pause-check-missing"
+    },
+    "test::pause_protocol::withdraw_with_pause": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Safe function with proper access control"
+    },
+    "test::pause_protocol::admin_withdraw_no_pause": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Vulnerable function in pause-check-missing"
+    },
+    "test::pause_protocol::admin_withdraw_with_pause": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Safe function with proper access control"
+    },
+    "test::pause_protocol::pause_protocol": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Vulnerable function in pause-check-missing"
+    },
+    "test::pause_protocol::unpause_protocol": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Vulnerable function in pause-check-missing"
+    },
+    "test::pause_protocol::pause_admin": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Safe function with proper access control"
+    },
+    "test::pause_protocol::unpause_admin": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Safe function with proper access control"
+    },
+    "test::pause_protocol::ipa_withdraw_no_pause": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Vulnerable function in pause-check-missing"
+    },
+    "test::pause_protocol::ipa_withdraw_with_pause": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Safe function with proper access control"
+    }
+  },
+  "pause": {
+    "has_pause": true,
+    "confidence": 1.0,
+    "pause_struct": "test::pause_protocol::Config",
+    "pause_field": "paused",
+    "check_functions": [
+      "test::pause_protocol::withdraw_with_pause",
+      "test::pause_protocol::admin_withdraw_with_pause",
+      "test::pause_protocol::do_withdraw_checked",
+      "test::pause_protocol::ipa_withdraw_with_pause"
+    ],
+    "control_functions": [
+      "test::pause_protocol::pause_protocol",
+      "test::pause_protocol::unpause_protocol",
+      "test::pause_protocol::pause_admin",
+      "test::pause_protocol::unpause_admin"
+    ]
+  }
+}

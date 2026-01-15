@@ -1,0 +1,24 @@
+{
+  "UnifiedClassify": {
+    "test::phantom_type_mismatch::AdminCap": {
+      "is_role": true,
+      "is_event": false,
+      "is_config": false,
+      "is_state_container": false
+    },
+    "test::phantom_type_mismatch::Pool": {
+      "is_role": false,
+      "is_event": false,
+      "is_config": false,
+      "is_state_container": true
+    },
+    "test::phantom_type_mismatch::Treasury": {
+      "is_role": false,
+      "is_event": false,
+      "is_config": false,
+      "is_state_container": true
+    }
+  },
+  "functions": {},
+  "fields": {}
+}

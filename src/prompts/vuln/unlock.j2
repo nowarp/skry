@@ -1,0 +1,43 @@
+## FUNCTION: {{ func_name }}{{ category_hint }}
+{% if entry_docstring %}
+{{ entry_docstring }}
+{% endif %}
+```move
+{{ entry_source }}
+```
+
+{% if callee_sources %}
+## CALLEES:
+{% for callee, callee_source in callee_sources.items() %}
+### {{ callee }}
+```move
+{{ callee_source }}
+```
+{% endfor %}
+{% endif %}
+
+{% if hidden_sinks or hidden_assertions %}
+## DEEP CALL CHAIN INFO (not shown above)
+{% if hidden_sinks %}
+Sinks:
+{% for sink_type, func in hidden_sinks[:5] %}
+  - {{ sink_type }} in {{ func }}
+{% endfor %}
+{% endif %}
+{% if hidden_assertions %}
+Assertions:
+{% for var, func in hidden_assertions[:5] %}
+  - `{{ var }}` checked in {{ func }}
+{% endfor %}
+{% endif %}
+{% endif %}
+
+## TASK
+Analyze this Move function for missing unlock/release vulnerability.
+
+1. Does this function acquire a lock, mutex, or exclusive resource that MUST be released?
+   (Not: read-only checks, view functions, pausable checks, object destruction)
+
+2. If yes, is the lock/resource released on ALL execution paths before the function returns?
+
+Answer:

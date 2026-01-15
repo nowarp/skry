@@ -1,0 +1,524 @@
+{
+  "UnifiedClassify": {
+    "test::admin_drain_risk::AdminCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::admin_drain_risk::UserVault": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": true,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": ["balance"],
+      "privileged_fields": ["owner"],
+      "lock_fields": []
+    },
+    "test::admin_drain_safe::AdminCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::admin_drain_safe::UserVault": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": true,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": ["balance"],
+      "privileged_fields": ["owner"],
+      "lock_fields": []
+    },
+    "test::admin_drain_ipa_vuln::AdminCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::admin_drain_ipa_vuln::UserVault": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": true,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": ["balance"],
+      "privileged_fields": ["owner"],
+      "lock_fields": []
+    },
+    "test::admin_drain_ipa_safe::AdminCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::admin_drain_ipa_safe::UserVault": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": true,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": ["balance"],
+      "privileged_fields": ["owner"],
+      "lock_fields": []
+    },
+    "test::admin_drain_entry::AdminCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::admin_drain_helper::UserVault": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": true,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": ["balance"],
+      "privileged_fields": ["owner"],
+      "lock_fields": []
+    },
+    "test::admin_drain_hop_a::AdminCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::admin_drain_hop_b::UserVault": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": true,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": ["balance"],
+      "privileged_fields": ["owner"],
+      "lock_fields": []
+    },
+    "test::fqn_collision_a::AdminCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::fqn_collision_a::Vault": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": true,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": ["balance"],
+      "privileged_fields": ["owner"],
+      "lock_fields": []
+    },
+    "test::fqn_collision_b::AdminCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::fqn_collision_b::Vault": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": true,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": ["balance"],
+      "privileged_fields": ["owner"],
+      "lock_fields": []
+    },
+    "test::priv_in_callee::AdminCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::priv_in_callee::UserVault": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": true,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": ["balance"],
+      "privileged_fields": ["owner"],
+      "lock_fields": []
+    },
+    "test::xmod_asset_types::AdminCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::xmod_asset_types::UserVault": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": true,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": ["balance"],
+      "privileged_fields": ["owner"],
+      "lock_fields": []
+    },
+    "test::xmod_asset_user::LocalAdminCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::recipient_edge::AdminCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::recipient_edge::UserVault": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": true,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": ["balance"],
+      "privileged_fields": ["owner"],
+      "lock_fields": []
+    },
+    "test::mixed_paths::AdminCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::mixed_paths::UserVault": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": true,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": ["balance", "emergency_recipient"],
+      "privileged_fields": ["owner"],
+      "lock_fields": []
+    },
+    "test::non_entry::AdminCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::non_entry::UserVault": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": true,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": ["balance"],
+      "privileged_fields": ["owner"],
+      "lock_fields": []
+    },
+    "test::deep_chain::AdminCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::deep_chain::UserVault": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": true,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": ["balance"],
+      "privileged_fields": ["owner"],
+      "lock_fields": []
+    }
+  },
+  "AccessControlClassify": {
+    "test::admin_drain_risk::admin_emergency_withdraw": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Admin can drain user vault to arbitrary recipient - centralization risk"
+    },
+    "test::admin_drain_risk::admin_rescue_funds": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Admin can drain user vault to arbitrary recipient"
+    },
+    "test::admin_drain_risk::admin_safe_withdraw": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Admin withdraws only to vault owner - no arbitrary recipient"
+    },
+    "test::admin_drain_risk::user_withdraw": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "User controls their own withdrawal with sender check"
+    },
+    "test::admin_drain_safe::admin_collect_fees": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Admin withdraws protocol fees, not user assets"
+    },
+    "test::admin_drain_safe::admin_rescue_to_owner": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Admin can only rescue to vault owner"
+    },
+    "test::admin_drain_safe::user_self_withdraw": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "User controls withdrawal with sender check"
+    },
+    "test::admin_drain_ipa_vuln::admin_withdraw": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Admin entry function drains to arbitrary recipient via helper"
+    },
+    "test::admin_drain_ipa_safe::admin_rescue": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Admin rescue returns to vault owner only"
+    },
+    "test::admin_drain_entry::emergency_withdraw": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Admin drains user vault to arbitrary recipient via cross-module call"
+    },
+    "test::admin_drain_hop_a::admin_rescue_funds": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Admin drains to arbitrary recipient through multihop chain"
+    },
+    "test::fqn_collision_a::admin_withdraw": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Admin drains vault to arbitrary recipient"
+    },
+    "test::fqn_collision_b::admin_rescue": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Admin can only rescue to vault owner"
+    },
+    "test::priv_in_callee::privileged_entry_passes_cap": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Entry passes admin cap to callee that drains to arbitrary recipient"
+    },
+    "test::xmod_asset_user::admin_drain_xmod": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Admin drains cross-module UserVault to arbitrary recipient"
+    },
+    "test::xmod_asset_user::local_admin_drain_xmod": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Local admin drains cross-module UserVault to arbitrary recipient"
+    },
+    "test::xmod_asset_user::admin_rescue_xmod": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Admin returns to vault owner - safe"
+    },
+    "test::recipient_edge::admin_to_treasury": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Transfer to hardcoded treasury address - not arbitrary"
+    },
+    "test::recipient_edge::admin_to_self": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Transfer to sender - admin gets own funds back"
+    },
+    "test::recipient_edge::admin_to_owner": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Transfer to vault owner - safe"
+    },
+    "test::recipient_edge::admin_to_object_id": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Transfer to object address - not arbitrary user address"
+    },
+    "test::recipient_edge::admin_to_arbitrary": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Transfer to arbitrary recipient parameter - centralization risk"
+    },
+    "test::recipient_edge::admin_to_zero": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Transfer to zero address - suspicious burn or bug"
+    },
+    "test::mixed_paths::conditional_drain": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Has unsafe code path to arbitrary recipient even if safe path exists"
+    },
+    "test::mixed_paths::drain_to_stored_recipient": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Stored recipient could be set to attacker address"
+    },
+    "test::mixed_paths::split_transfer": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Half goes to arbitrary recipient - partial drain risk"
+    },
+    "test::mixed_paths::all_safe_paths": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "All paths transfer to vault owner - safe"
+    },
+    "test::non_entry::entry_calls_public": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Entry delegates to public helper that drains to arbitrary recipient"
+    },
+    "test::non_entry::entry_calls_private": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Entry delegates to private helper that drains to arbitrary recipient"
+    },
+    "test::deep_chain::deep_chain_4_hops": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "4-hop call chain ends in drain to arbitrary recipient"
+    },
+    "test::deep_chain::deep_chain_5_hops": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "5-hop call chain ends in drain to arbitrary recipient"
+    },
+    "test::deep_chain::privilege_mid_chain": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Privilege check in middle of chain, drain at end"
+    },
+    "test::deep_chain::branching_chain": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Has unsafe branch that drains to arbitrary recipient"
+    },
+    "test::deep_chain::recursive_chain": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Recursive chain ends in drain to arbitrary recipient"
+    }
+  }
+}

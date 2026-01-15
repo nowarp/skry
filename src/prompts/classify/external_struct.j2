@@ -1,0 +1,38 @@
+## External Type Classification
+
+Type: {{ type_fqn }}
+(No source code available - classifying based on usage in this codebase)
+
+{% if stored_in %}
+### Stored In Structs
+{% for s in stored_in %}
+- {{ s.struct }} (field: {{ s.field }}){% if s.co_located_caps %} Co-located with: {{ s.co_located_caps | join(", ") }}{% endif %}
+
+{% endfor %}
+{% endif %}
+
+{% if functions_using %}
+### Used as Parameter In
+{% for f in functions_using %}
+- {{ f.name }} [{{ f.visibility }}]{% if f.checks_other_cap %} (checks other capability){% endif %}
+
+{% endfor %}
+{% endif %}
+
+{% if getters %}
+### Getter Functions
+{% for g in getters %}
+- {{ g.name }}() -> {% if g.returns_ref %}&{% endif %}{{ simple_name }} [{{ g.visibility }}]
+{% endfor %}
+{% endif %}
+
+## Classification Questions
+
+1. **is_role**: Based on the usage pattern above, is this a capability/permission type that gates access?
+   - Consider: co-located with known caps, restricted getters, used in privileged functions
+
+2. **is_privileged**: Is this admin-controlled (not user-owned)?
+   - YES if: stored in shared Config alongside admin caps
+   - NO if: would be given to users
+
+Answer JSON: {"is_role": bool, "is_privileged": bool}

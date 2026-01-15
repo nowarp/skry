@@ -1,0 +1,3 @@
+[submodule "third-party/sui"]
+	path = third-party/sui
+	url = https://github.com/MystenLabs/sui

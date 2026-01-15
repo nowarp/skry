@@ -1,0 +1,53 @@
+Classify this Sui Move project into categories.
+
+## Project: {{ project_name }}
+
+### Modules:
+{% if modules %}
+{% for m in modules %}
+- {{ m }}
+{% endfor %}
+{% else %}
+(none)
+{% endif %}
+
+### Structs:
+{% if structs %}
+{% for s in structs %}
+- {{ s.name }}
+{% endfor %}
+{% else %}
+(none)
+{% endif %}
+
+### Public/Entry Functions:
+{% if functions %}
+{% for f in functions %}
+- {{ f.signature }}{% if f.is_entry %} [entry]{% endif %}
+
+{% endfor %}
+{% else %}
+(none)
+{% endif %}
+
+### Events:
+{% if events %}
+{% for e in events %}
+- {{ e }}
+{% endfor %}
+{% else %}
+(none)
+{% endif %}
+
+## Categories:
+- bridge: Cross-chain messaging, token bridging
+- gaming: Games, in-game currency, player actions, often with backend signatures
+- nft_marketplace: NFT minting, trading, auctions
+- governance: Voting, proposals, DAO mechanisms
+- oracle: Price feeds, data providers
+- token: Simple token operations, vesting, airdrops
+- infrastructure: Libraries, utilities, no user-facing entry points
+
+For each applicable category, estimate probability (0.0-1.0).
+A project can belong to multiple categories.
+Only include categories with probability > 0.3.

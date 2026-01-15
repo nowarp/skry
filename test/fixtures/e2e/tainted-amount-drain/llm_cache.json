@@ -1,0 +1,84 @@
+{
+  "UnifiedClassify": {
+    "test::tainted_amount::Pool": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": true,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": ["balance"],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::tainted_amount::AdminCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::amount_helper::Pool": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": true,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": ["balance"],
+      "privileged_fields": [],
+      "lock_fields": []
+    },
+    "test::amount_helper::AdminCap": {
+      "is_role": true,
+      "is_privileged": true,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": false,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [],
+      "privileged_fields": [],
+      "lock_fields": []
+    }
+  },
+  "AccessControlClassify": {
+    "test::tainted_amount::drain_direct": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "User controls amount in coin::take - can drain arbitrary amount"
+    },
+    "test::tainted_amount::drain_via_helper": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Entry passes tainted amount to helper for drain"
+    },
+    "test::tainted_amount::drain_with_role": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Protected by AdminCap role check"
+    },
+    "test::tainted_amount::drain_via_guarded_helper": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Calls helper with AdminCap guard"
+    },
+    "test::amount_entry::drain_cross_module": {
+      "is_vulnerable": true,
+      "has_access_control": false,
+      "reason": "Cross-module call with tainted amount, no access control"
+    },
+    "test::amount_entry::drain_cross_module_guarded": {
+      "is_vulnerable": false,
+      "has_access_control": true,
+      "reason": "Cross-module call with AdminCap protection"
+    }
+  }
+}
