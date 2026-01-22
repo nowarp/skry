@@ -14,12 +14,12 @@ git clone --recursive https://github.com/nowarp/skry
 pip install -r requirements.txt
 ```
 
-Set environment variables according to your setup:
+Set the `SKRY_LLM_MODE` environment variable according to your setup:
+* `claude-cli` uses [Claude Code](https://claude.ai/code)
+* `api` uses the DeepSeek API and requires `DEEPSEEK_API_KEY` to be set
+* `manual` prints full prompts for copy-paste into a web interface, useful for debugging and model evaluation
 
 ```bash
-# `claude-cli` uses local Claude Code
-# `api` uses the DeepSeek API and requires DEEPSEEK_API_KEY to be set
-# `manual` prints complete prompts for copy-paste into a web interface – useful for debugging
 export SKRY_LLM_MODE=manual|api|claude-cli
 ```
 
