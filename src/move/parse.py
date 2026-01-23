@@ -44,7 +44,7 @@ except ImportError:
     error("tree-sitter not installed. Run: pip install -r requirements.txt")
     sys.exit(1)
 
-TREE_SITTER_MOVE_DIR = "./third-party/sui/external-crates/move/tooling/tree-sitter"
+TREE_SITTER_MOVE_DIR = Path(__file__).resolve().parent.parent.parent / "third-party/sui/external-crates/move/tooling/tree-sitter"
 
 # Types that represent extractable value (Coin, Balance, Token, etc.)
 # These are types that when returned from a function, indicate value extraction

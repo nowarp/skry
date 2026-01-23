@@ -9,6 +9,7 @@ from typing import List
 
 from rules.hy_loader import HyRule, load_hy_rules
 from core.utils import debug, error, warn
+from move.parse import TREE_SITTER_MOVE_DIR
 
 # Type alias for rules (now only HyRule)
 AnyRule = HyRule
@@ -33,14 +34,14 @@ def validate_environment(require_llm: bool = True) -> None:
                 )
 
     # Check tree-sitter grammar
-    grammar_path = Path("./tree-sitter-sui-move/grammar.js")
+    grammar_path = TREE_SITTER_MOVE_DIR / "grammar.js"
     if not grammar_path.exists():
         errors.append(
-            "tree-sitter-sui-move grammar not found. Initialize submodules:\n  git submodule update --init --recursive"
+            f"tree-sitter-sui-move grammar not found at {TREE_SITTER_MOVE_DIR}. Initialize submodules:\n  git submodule update --init --recursive"
         )
 
     # Check if tree-sitter library is built
-    so_path = Path("./tree-sitter-sui-move/build/move.so")
+    so_path = TREE_SITTER_MOVE_DIR / "build" / "move.so"
     if grammar_path.exists() and not so_path.exists():
         warn("tree-sitter library not built yet. Will build on first run...")
 
