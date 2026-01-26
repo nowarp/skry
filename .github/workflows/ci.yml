@@ -1,0 +1,66 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  lint:
+    name: Lint & Format Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dev tools
+        run: pip install ruff ty
+
+      - name: Check formatting
+        run: ruff format --check src/
+
+      - name: Run linter
+        run: ./scripts/lint.sh
+
+  test:
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt pytest
+
+      - name: Run tests
+        run: PYTHONPATH=src python -m pytest test/ -v
+
+  # e2e-syntax:
+  #   name: E2E Syntax Check
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
+  #       with:
+  #         submodules: recursive
+  #
+  #     - name: Install Sui CLI
+  #       run: |
+  #         curl -fsSL https://sui.io/install.sh | bash
+  #         echo "$HOME/.sui/bin" >> $GITHUB_PATH
+  #
+  #     - name: Check E2E Move syntax
+  #       run: ./scripts/check_e2e_syntax.sh
