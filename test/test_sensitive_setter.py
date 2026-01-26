@@ -112,7 +112,7 @@ module test {
 }
 """
 
-        with patch("llm.client.call_llm_json") as mock_llm:
+        with patch("semantic.llm_facts.call_llm_json") as mock_llm:
             mock_llm.return_value = {
                 "has_access_control": False,
                 "modifies_protocol_config": True,
@@ -157,7 +157,7 @@ module test {
 }
 """
 
-        with patch("llm.client.call_llm_json") as mock_llm:
+        with patch("semantic.llm_facts.call_llm_json") as mock_llm:
             mock_llm.return_value = {
                 "has_access_control": False,
                 "modifies_protocol_config": False,
@@ -188,7 +188,7 @@ module test {
         ]
         source = "module test { public fun update_local(record: &mut Record) {} }"
 
-        with patch("llm.client.call_llm_json") as mock_llm:
+        with patch("semantic.llm_facts.call_llm_json") as mock_llm:
             is_vulnerable = generate_sensitive_setter_fact(
                 func_name="test::update_local",
                 file_path="test.move",
