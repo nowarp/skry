@@ -67,6 +67,45 @@ def run_fact_propagation(ctx: ProjectContext) -> None:
         detect_phantom_type_mismatch,
         detect_capability_leak_via_store,
     )
+    from move.taint_facts import generate_unused_arg_facts
+    from move.cst_to_ir import build_ir_from_source
+
+    # Regenerate UnusedArg facts after IsCapability facts are available
+    # (UnusedArg is generated in Pass 1 before LLM classification, so role_types is empty)
+    role_types: set[str] = set()
+    for source_file in ctx.source_files.values():
+        for fact in source_file.facts:
+            if fact.name == "IsCapability":
+                role_types.add(fact.args[0])
+
+    if role_types:
+        for file_path, file_ctx in ctx.source_files.items():
+            if file_ctx.source_code is None:
+                continue
+
+            # Rebuild module IR from source (same as Pass 1)
+            module = build_ir_from_source(file_ctx.source_code, file_ctx.root)
+            if not module or not module.functions:
+                continue
+
+            # Remove old UnusedArg facts
+            old_unused_arg_facts = [f for f in file_ctx.facts if f.name == "UnusedArg"]
+            file_ctx.facts = [f for f in file_ctx.facts if f.name != "UnusedArg"]
+            # Also remove from global_facts_index
+            for fact in old_unused_arg_facts:
+                func_name = fact.args[0]
+                if func_name in ctx.global_facts_index and file_path in ctx.global_facts_index[func_name]:
+                    if fact in ctx.global_facts_index[func_name][file_path]:
+                        ctx.global_facts_index[func_name][file_path].remove(fact)
+
+            # Regenerate with capability types
+            for func in module.functions:
+                unused_arg_facts = generate_unused_arg_facts(func, role_types)
+                file_ctx.facts.extend(unused_arg_facts)
+                # Also add to global_facts_index for reporter lookup
+                for fact in unused_arg_facts:
+                    if func.name in ctx.global_facts_index and file_path in ctx.global_facts_index[func.name]:
+                        ctx.global_facts_index[func.name][file_path].append(fact)
 
     # Regenerate CreatesCapability after LLM IsCapability facts are available
     generate_creates_capability_facts(ctx)

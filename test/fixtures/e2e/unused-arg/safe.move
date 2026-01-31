@@ -1,6 +1,10 @@
 /// Safe test cases - all args used or explicitly marked unused
+// @inject: IsCapability("AdminCap")
+// @inject: IsCapability("VersionCap")
+// @inject: IsCapability("ExecutorCap")
 module test::unused_arg_safe {
     use sui::tx_context::TxContext;
+    use sui::object::UID;
 
     /// All arguments used
     public fun add(a: u64, b: u64): u64 {
@@ -89,5 +93,40 @@ module test::unused_arg_safe {
     /// Multiple index accesses in complex expression
     public fun multi_index(grid: &Grid<u64>, i: u64, j: u64): u64 {
         grid.data[i] + grid.data[j]
+    }
+
+    // ==========================================================================
+    // Capability arguments - used for authorization proof, presence IS the check
+    // ==========================================================================
+
+    public struct AdminCap has key, store { id: UID }
+    public struct VersionCap has key, store { id: UID }
+    public struct ExecutorCap has key, store { id: UID }
+
+    /// Capability arg not used in body but serves as authorization proof
+    /// Should NOT be flagged (IsCapability fact injected above)
+    public fun admin_only(cap: &AdminCap, value: u64): u64 {
+        value * 2
+    }
+
+    /// Multiple capability args - none used but all are authorization proofs
+    public fun multi_cap_auth(
+        _admin: &AdminCap,
+        version_cap: &VersionCap,
+        value: u64
+    ): u64 {
+        value + 1
+    }
+
+    /// Mutable capability reference - still an authorization proof
+    public fun admin_mut(cap: &mut AdminCap, amount: u64): u64 {
+        amount * 3
+    }
+
+    /// Mix of capability and regular unused - only regular should be flagged
+    /// NOTE: This function has 'unused_regular' which SHOULD be flagged
+    /// But that's tested in vulnerable.move. Here we verify cap is NOT flagged.
+    public fun cap_with_used_args(cap: &ExecutorCap, used_value: u64): u64 {
+        used_value + 100
     }
 }

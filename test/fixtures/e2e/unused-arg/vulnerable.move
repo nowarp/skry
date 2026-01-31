@@ -1,5 +1,6 @@
 /// Test cases for unused-arg rule.
 /// Function argument is never used
+// @inject: IsCapability("AdminCap")
 module test::unused_arg {
     use sui::coin::{Self, Coin};
     use sui::balance::Balance;
@@ -56,5 +57,21 @@ module test::unused_arg {
     /// SAFE: init functions should NEVER be checked for unused args
     public fun init(ctx: &mut TxContext, fee_wallet: address, decimals: u8) {
         // fee_wallet and decimals unused - but init functions are exempt
+    }
+
+    // ==========================================================================
+    // Capability + unused regular arg - cap NOT flagged, regular IS flagged
+    // ==========================================================================
+
+    public struct AdminCap has key, store { id: UID }
+
+    /// VULNERABLE: 'unused_amount' is unused, but 'cap' should NOT be flagged
+    /// because it's a capability (IsCapability fact injected above)
+    // @expect: unused-arg
+    public fun cap_with_unused(cap: &AdminCap, pool: &mut Pool, unused_amount: u64, ctx: &mut TxContext) {
+        // cap is authorization proof - its presence IS the check
+        // unused_amount is genuinely unused
+        let coins = coin::take(&mut pool.balance, 100, ctx);
+        transfer::public_transfer(coins, tx_context::sender(ctx));
     }
 }
