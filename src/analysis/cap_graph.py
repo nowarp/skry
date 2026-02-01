@@ -42,19 +42,13 @@ class CapEdge:
     details: Optional[str] = None  # Additional info
 
 
-def _compute_edge_signature(
-    node_name: str, edges: List[CapEdge]
-) -> Tuple[frozenset, frozenset]:
+def _compute_edge_signature(node_name: str, edges: List[CapEdge]) -> Tuple[frozenset, frozenset]:
     """Compute edge signature for a node (outgoing edges, incoming edges)."""
     outgoing = frozenset(
-        (e.kind, e.target, e.guard, e.address_class, e.details)
-        for e in edges
-        if e.source == node_name
+        (e.kind, e.target, e.guard, e.address_class, e.details) for e in edges if e.source == node_name
     )
     incoming = frozenset(
-        (e.kind, e.source, e.guard, e.address_class, e.details)
-        for e in edges
-        if e.target == node_name
+        (e.kind, e.source, e.guard, e.address_class, e.details) for e in edges if e.target == node_name
     )
     return (outgoing, incoming)
 

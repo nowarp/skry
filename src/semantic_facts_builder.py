@@ -252,39 +252,25 @@ class SemanticFactsBuilder:
             self._emit_field_facts(file_ctx, struct_name, classification, valid_fields, new_field_facts, counts)
 
         # Classify external types (from dependencies, no source code)
-        external_counts = {"fast_path": 0, "llm": 0}
         external_candidates = self._collect_external_type_candidates(ctx)
         if external_candidates:
-            debug(f"Pass 2: Classifying {len(external_candidates)} external types...")
+            debug(f"Pass 2: Classifying {len(external_candidates)} external types via LLM...")
 
             for type_fqn in external_candidates:
                 usage_ctx = self._build_external_type_context(type_fqn, ctx)
 
-                if self._is_obvious_external_role(usage_ctx):
-                    # Fast-path: obvious role based on usage
-                    self._emit_external_role_facts(type_fqn, ctx, is_role=True, is_privileged=True)
-                    external_counts["fast_path"] += 1
+                # Always use LLM for external type classification
+                classification = self._classify_external_type_llm(type_fqn, usage_ctx)
+                self._emit_external_role_facts(
+                    type_fqn,
+                    ctx,
+                    is_role=classification.get("is_role", False),
+                    is_privileged=classification.get("is_privileged", False),
+                )
+                if classification.get("is_role"):
                     counts["IsCapability"] += 1
+                if classification.get("is_privileged"):
                     counts["IsPrivileged"] += 1
-                else:
-                    # LLM classification with usage context
-                    classification = self._classify_external_type_llm(type_fqn, usage_ctx)
-                    self._emit_external_role_facts(
-                        type_fqn,
-                        ctx,
-                        is_role=classification.get("is_role", False),
-                        is_privileged=classification.get("is_privileged", False),
-                    )
-                    external_counts["llm"] += 1
-                    if classification.get("is_role"):
-                        counts["IsCapability"] += 1
-                    if classification.get("is_privileged"):
-                        counts["IsPrivileged"] += 1
-
-            debug(
-                f"Pass 2: External types - {external_counts['fast_path']} fast-path, "
-                f"{external_counts['llm']} LLM-classified"
-            )
 
         # Log summary
         if any(counts.values()):
@@ -1186,20 +1172,6 @@ class SemanticFactsBuilder:
                         if clean_field == priv_type:
                             co_located.append(get_simple_name(priv_type))
         return co_located
-
-    def _is_obvious_external_role(self, usage_ctx: dict) -> bool:
-        """Fast-path: detect obvious external roles without LLM."""
-        # Signal 1: Co-located with known privileged types
-        for struct_info in usage_ctx["stored_in"]:
-            if struct_info["co_located_caps"]:
-                return True
-
-        # Signal 2: Has restricted getter
-        for getter in usage_ctx["getters"]:
-            if getter["visibility"] in ("public(package)", "public(friend)"):
-                return True
-
-        return False
 
     def _classify_external_type_llm(self, type_fqn: str, usage_ctx: dict) -> dict:
         """Classify external type via LLM using usage context."""
