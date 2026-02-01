@@ -42,6 +42,89 @@ class CapEdge:
     details: Optional[str] = None  # Additional info
 
 
+def _compute_edge_signature(
+    node_name: str, edges: List[CapEdge]
+) -> Tuple[frozenset, frozenset]:
+    """Compute edge signature for a node (outgoing edges, incoming edges)."""
+    outgoing = frozenset(
+        (e.kind, e.target, e.guard, e.address_class, e.details)
+        for e in edges
+        if e.source == node_name
+    )
+    incoming = frozenset(
+        (e.kind, e.source, e.guard, e.address_class, e.details)
+        for e in edges
+        if e.target == node_name
+    )
+    return (outgoing, incoming)
+
+
+def _merge_equivalent_functions(
+    funcs: List[CapNode], edges: List[CapEdge]
+) -> Tuple[List[CapNode], List[CapEdge], Dict[str, str]]:
+    """
+    Merge function nodes with identical edge signatures.
+
+    Returns:
+        Tuple of (merged_nodes, updated_edges, name_mapping)
+        where name_mapping maps original names to merged node names.
+    """
+    if not funcs:
+        return [], [], {}
+
+    sig_to_funcs: Dict[Tuple[frozenset, frozenset], List[CapNode]] = {}
+    for func in funcs:
+        sig = _compute_edge_signature(func.name, edges)
+        if sig not in sig_to_funcs:
+            sig_to_funcs[sig] = []
+        sig_to_funcs[sig].append(func)
+
+    merged_nodes: List[CapNode] = []
+    name_mapping: Dict[str, str] = {}
+
+    for sig, group in sig_to_funcs.items():
+        if len(group) == 1:
+            merged_nodes.append(group[0])
+            name_mapping[group[0].name] = group[0].name
+        else:
+            sorted_group = sorted(group, key=lambda n: n.name)
+            merged_name = sorted_group[0].name
+            combined_props: Dict[str, Any] = {}
+            for node in sorted_group:
+                combined_props.update(node.properties)
+            combined_props["_merged_names"] = [n.name for n in sorted_group]
+
+            merged_node = CapNode(
+                kind="function",
+                name=merged_name,
+                properties=combined_props,
+            )
+            merged_nodes.append(merged_node)
+            for node in group:
+                name_mapping[node.name] = merged_name
+
+    updated_edges: List[CapEdge] = []
+    seen: Set[Tuple] = set()
+    for edge in edges:
+        new_source = name_mapping.get(edge.source, edge.source)
+        new_target = name_mapping.get(edge.target, edge.target)
+        edge_key = (new_source, new_target, edge.kind, edge.guard, edge.address_class, edge.details)
+        if edge_key not in seen:
+            seen.add(edge_key)
+            updated_edges.append(
+                CapEdge(
+                    kind=edge.kind,
+                    source=new_source,
+                    target=new_target,
+                    guard=edge.guard,
+                    address_class=edge.address_class,
+                    details=edge.details,
+                )
+            )
+
+    return merged_nodes, updated_edges, name_mapping
+
+
 def build_cap_graph(ctx: "ProjectContext") -> Tuple[List[CapNode], List[CapEdge]]:
     """
     Build capability graph from facts.
@@ -301,15 +384,23 @@ def _mermaid_node_id(name: str) -> str:
 def _render_mermaid_node(node: CapNode) -> str:
     """Render a node in Mermaid syntax with appropriate shape."""
     node_id = _mermaid_node_id(node.name)
-    label = node.name.replace('"', r"\"")
 
     if node.kind == "capability":
+        label = node.name.replace('"', r"\"")
         return f'        {node_id}[["{label}"]]'
     elif node.kind == "object":
+        label = node.name.replace('"', r"\"")
         return f'        {node_id}(["{label}"])'
     elif node.kind == "address":
+        label = node.name.replace('"', r"\"")
         return f'        {node_id}{{{{"{label}"}}}}'
     else:  # function
+        merged_names = node.properties.get("_merged_names")
+        if merged_names:
+            func_labels = [f"ƒ {get_simple_name(n)}" for n in merged_names]
+            label = "<br/>".join(func_labels)
+        else:
+            label = f"ƒ {get_simple_name(node.name)}"
         return f'        {node_id}["{label}"]'
 
 
@@ -391,6 +482,10 @@ def dump_cap_graph_to_dir(ctx: "ProjectContext", output_dir: str) -> None:
     init_funcs = [n for n in nodes if n.kind == "function" and n.properties.get("init")]
     funcs = [n for n in nodes if n.kind == "function" and not n.properties.get("init")]
     addrs = [n for n in nodes if n.kind == "address"]
+
+    # Merge functions with identical edge signatures
+    funcs, edges, _ = _merge_equivalent_functions(funcs, edges)
+    init_funcs, edges, _ = _merge_equivalent_functions(init_funcs, edges)
 
     output_path = os.path.join(output_dir, "capgraph.mmd")
     lines = ["flowchart LR"]
