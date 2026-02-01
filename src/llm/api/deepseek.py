@@ -4,7 +4,7 @@ from typing import Dict, Any, List, Optional
 from llm.api.base import LLMProvider, LLMResponse
 
 try:
-    import requests  # ty: ignore[unresolved-import]
+    import requests
 except ImportError:
     requests = None  # ty: ignore[invalid-assignment]
 
