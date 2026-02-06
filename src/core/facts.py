@@ -897,6 +897,11 @@ define_fact(
     "Amount extraction operation",
     scope="statement",
 )
+define_fact(
+    "UnmatchedExtraction",
+    (("func_name", str), ("var", str)),
+    "Extraction result not transferred on all paths",
+)
 
 # =============================================================================
 # FACT DEFINITIONS - Project scope (cross-file features)

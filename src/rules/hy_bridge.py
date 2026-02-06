@@ -86,6 +86,7 @@ def _get_check_functions() -> Dict[str, Callable]:
         check_returns_mutable_ref,
         check_weak_randomness,
         check_sensitive_event_leak,
+        check_has_unmatched_extraction,
     )
 
     _check_functions = {
@@ -131,6 +132,7 @@ def _get_check_functions() -> Dict[str, Callable]:
         "returns_mutable_ref": check_returns_mutable_ref,
         "weak_randomness": check_weak_randomness,
         "sensitive_event_leak": check_sensitive_event_leak,
+        "has_unmatched_extraction": check_has_unmatched_extraction,
     }
 
     return _check_functions

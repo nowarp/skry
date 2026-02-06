@@ -57,9 +57,8 @@ module test::missing_transfer_loop {
     // Only one coin transferred, rest leaked - like partial_transfer
     // =========================================================================
 
-    /// FALSE NEGATIVE: Multiple extractions in loop, one transfer after
-    /// Rule sees "has transfer" and doesn't flag
-    // @false-negative: missing-transfer (loop extracts multiple, transfers once)
+    /// VULNERABLE: Multiple extractions in loop, one transfer after
+    // @expect: missing-transfer
     public entry fun loop_extract_single_transfer_after(
         pool: &mut Pool,
         amount: u64,
@@ -77,6 +76,33 @@ module test::missing_transfer_loop {
         };
         // Only transfers the last one
         sui::transfer::public_transfer(last_coins, sui::tx_context::sender(ctx));
+    }
+
+    // =========================================================================
+    // SAFE: Accumulate in loop, transfer accumulated
+    // =========================================================================
+
+    // =========================================================================
+    // VULNERABLE: Accumulate in loop, forget to transfer
+    // =========================================================================
+
+    /// VULNERABLE: Accumulate in loop, forget to transfer
+    // @expect: missing-transfer
+    public entry fun loop_accumulate_then_forget(
+        pool: &mut Pool,
+        amount: u64,
+        count: u64,
+        ctx: &mut TxContext
+    ) {
+        let mut accumulated = coin::zero<SUI>(ctx);
+        let mut i = 0;
+        while (i < count) {
+            let coins = coin::take(&mut pool.balance, amount, ctx);
+            coin::join(&mut accumulated, coins);
+            i = i + 1;
+        };
+        // accumulated never transferred - user gets nothing
+        coin::put(&mut pool.balance, accumulated);
     }
 
     // =========================================================================

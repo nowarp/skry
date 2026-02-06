@@ -328,3 +328,26 @@ def check_sensitive_event_leak(
                     break
 
     return apply_negation(result, condition.negation)
+
+
+def check_has_unmatched_extraction(
+    checker: "SemanticChecker",
+    rule: Rule,
+    binding: Binding,
+    condition: Condition,
+    facts: List[Fact],
+    source_code: str,
+    root,
+) -> bool:
+    """Check if function has extraction not matched by transfer on all paths.
+
+    Queries UnmatchedExtraction facts produced by the path-sensitive
+    extraction-transfer analysis (analysis/extraction_tracking.py).
+    """
+    func_name = binding.get(get_function_binding_key(rule))
+    if not func_name:
+        return condition.negation
+
+    all_facts = gather_facts_for_func(checker, facts, func_name)
+    found = has_fact(all_facts, "UnmatchedExtraction", lambda f: f.args[0] == func_name)
+    return apply_negation(found, condition.negation)

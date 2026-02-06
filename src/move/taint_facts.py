@@ -22,6 +22,7 @@ from .ir import (
     AbortStmt,
     WhileStmt,
     LoopStmt,
+    BreakStmt,
     AssignStmt,
     Call,
     BinOp,
@@ -32,6 +33,9 @@ from .ir import (
     FieldAccess,
     StructPack,
     Cast,
+    Literal,
+    IfExpr,
+    Block,
     Expr,
     expr_vars,
     expr_field_accesses,
@@ -464,6 +468,19 @@ def generate_stmt_facts(func_name: str, stmt: Stmt) -> List[Fact]:
                 for v in arg_vars:
                     facts.append(Fact("SanitizedByClamping", (func_name, stmt.id, stmt.bindings[0], v)))
 
+        # Track if-else clamping: let x = if (v < 100) { v } else { 100 }
+        # This is equivalent to min(v, 100) - result is bounded by the literal
+        if isinstance(stmt.value, IfExpr) and stmt.value.else_branch is not None:
+            if_expr = stmt.value
+            then_is_lit = _expr_is_literal(if_expr.then_branch)
+            else_is_lit = _expr_is_literal(if_expr.else_branch)  # type: ignore[arg-type]  # guarded by `is not None` above
+            # One branch must be a literal (the bound), the other contains the variable
+            if then_is_lit != else_is_lit:
+                # All vars in the non-literal branch are sanitized
+                cond_vars = expr_vars(if_expr.condition)
+                for v in cond_vars:
+                    facts.append(Fact("SanitizedByClamping", (func_name, stmt.id, stmt.bindings[0], v)))
+
         # Handle method call syntax: let authority = ctx.sender()
         # This is parsed as FieldAccess with field='sender()' instead of a Call
         if isinstance(stmt.value, FieldAccess) and stmt.value.field.endswith("()"):
@@ -670,6 +687,13 @@ def generate_stmt_facts(func_name: str, stmt: Stmt) -> List[Fact]:
             for v in sanitized:
                 facts.append(Fact("SanitizedByAbortCheck", (func_name, stmt.id, v)))
 
+        # Track if-else clamping at statement level (implicit return pattern)
+        # if (x > 100) { 100 } else { x } - bounds x by 100
+        if stmt.else_body and _is_if_else_clamping_stmt(stmt):
+            cond_vars = expr_vars(stmt.condition)
+            for v in cond_vars:
+                facts.append(Fact("SanitizedByClamping", (func_name, stmt.id, v, v)))
+
     elif isinstance(stmt, WhileStmt):
         # Track loop bound - the condition variables control iteration count
         # while (i < len) { ... } - 'len' is the loop bound
@@ -685,17 +709,45 @@ def generate_stmt_facts(func_name: str, stmt: Stmt) -> List[Fact]:
     elif isinstance(stmt, LoopStmt):
         # Infinite loop - check body for break conditions
         # loop { if (i >= len) break; ... } - 'len' is still a bound
+
+        # Track whether any break condition has a constant bound (sanitizes all tainted bounds)
+        has_constant_break_bound = False
+        all_tainted_bound_vars = []
+
         for s in stmt.body:
-            # Look for if statements with break that define the bound
             if isinstance(s, IfStmt):
-                # Check if then_body or else_body contains break
+                # Pattern 1: if (cond) break - standard break condition
                 if _contains_break(s.then_body) or (s.else_body and _contains_break(s.else_body)):
-                    # This is a BREAK condition - semantics are inverted
+                    # Check if this break has a constant bound (e.g., if (i >= 10) break)
+                    if _is_constant_bound_condition(s.condition):
+                        has_constant_break_bound = True
+
                     bound_vars = _extract_loop_bound_vars(s.condition, is_break_condition=True)
                     for v in bound_vars:
                         facts.append(Fact("LoopBoundSink", (func_name, stmt.id, v)))
                         facts.append(Fact("SinkUsesVar", (func_name, stmt.id, v, "loop_bound")))
+                        all_tainted_bound_vars.append(v)
+
+                # Pattern 2: if (cond) continue; break; - continue acts as while condition
+                # loop { ...; if (i < count) continue; break; }
+                # Equivalent to while (i < count)
+                elif _contains_continue(s.then_body):
+                    # Check if next statement is a bare break
+                    s_idx = stmt.body.index(s)
+                    if s_idx + 1 < len(stmt.body) and isinstance(stmt.body[s_idx + 1], BreakStmt):
+                        # Continue condition IS the while condition (not inverted)
+                        bound_vars = _extract_loop_bound_vars(s.condition, is_break_condition=False)
+                        for v in bound_vars:
+                            facts.append(Fact("LoopBoundSink", (func_name, stmt.id, v)))
+                            facts.append(Fact("SinkUsesVar", (func_name, stmt.id, v, "loop_bound")))
+                            all_tainted_bound_vars.append(v)
+
             facts.extend(generate_stmt_facts(func_name, s))
+
+        # If any break condition has a constant bound, all tainted bounds are sanitized
+        if has_constant_break_bound:
+            for v in all_tainted_bound_vars:
+                facts.append(Fact("SanitizedByClamping", (func_name, stmt.id, v, v)))
 
     elif isinstance(stmt, ReturnStmt):
         # Track field accesses in return values for interprocedural tracking
@@ -868,6 +920,66 @@ def _contains_break(body: List[Stmt]) -> bool:
                 return True
             if s.else_body and _contains_break(s.else_body):
                 return True
+    return False
+
+
+def _is_if_else_clamping_stmt(stmt: IfStmt) -> bool:
+    """Check if an IfStmt represents a clamping pattern (one branch literal, other variable).
+
+    Detects: if (x > 100) { 100 } else { x }
+    This is equivalent to min(x, 100).
+    """
+    if not stmt.else_body:
+        return False
+    then_expr = _get_single_expr_value(stmt.then_body)
+    else_expr = _get_single_expr_value(stmt.else_body)
+    if then_expr is None or else_expr is None:
+        return False
+    then_is_lit = _expr_is_literal(then_expr)
+    else_is_lit = _expr_is_literal(else_expr)
+    return then_is_lit != else_is_lit
+
+
+def _get_single_expr_value(body: List[Stmt]) -> Optional[Expr]:
+    """Get the expression value from a single-statement body (implicit return)."""
+    if len(body) == 1:
+        s = body[0]
+        if isinstance(s, ExprStmt):
+            return s.expr
+        if isinstance(s, ReturnStmt) and s.value:
+            return s.value
+    return None
+
+
+def _expr_is_literal(expr: Expr) -> bool:
+    """Check if an expression is a literal value (possibly wrapped in a Block)."""
+    if isinstance(expr, Literal):
+        return True
+    # Handle block-wrapped literals: { 100 }
+    if isinstance(expr, Block) and expr.final_expr and not expr.stmts:
+        return _expr_is_literal(expr.final_expr)
+    return False
+
+
+def _contains_continue(body: List[Stmt]) -> bool:
+    """Check if a statement list contains a continue statement."""
+    from .ir import ContinueStmt
+
+    for s in body:
+        if isinstance(s, ContinueStmt):
+            return True
+        if isinstance(s, IfStmt):
+            if _contains_continue(s.then_body):
+                return True
+            if s.else_body and _contains_continue(s.else_body):
+                return True
+    return False
+
+
+def _is_constant_bound_condition(cond: Expr) -> bool:
+    """Check if a comparison condition has a constant (Literal) on one side."""
+    if isinstance(cond, BinOp) and cond.op in COMPARISON_OPS:
+        return isinstance(cond.left, Literal) or isinstance(cond.right, Literal)
     return False
 
 

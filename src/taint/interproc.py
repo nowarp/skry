@@ -13,7 +13,8 @@ from typing import Dict, List, Set, Tuple, Optional
 from core.utils import debug, error
 from core.facts import Fact
 from core.context import ProjectContext
-from move.ir import Module, Function
+from move.ir import Module, Function, IfStmt, AssignStmt, Deref, VarRef, Literal, Stmt
+from move.taint_facts import COMPARISON_OPS
 from move.taint_facts import generate_taint_base_facts
 from taint.analysis import propagate_taint, analyze_sink_reachability
 from move.cst_to_ir import build_ir_from_source
@@ -47,6 +48,10 @@ class FunctionSummary:
     # param_idx -> set of param indices that become tainted via mutable reference
     # When param N is tainted and flows through *param_M = val, param M becomes tainted
     param_to_mutref_params: Dict[int, Set[int]] = field(default_factory=dict)
+    # Param indices whose return value is sanitized (tainted input → sanitized output)
+    sanitizes_return: Set[int] = field(default_factory=set)
+    # Param indices whose mut-ref value is sanitized by the callee
+    sanitizes_mutref: Set[int] = field(default_factory=set)
 
 
 def compute_function_summary(func: Function, all_module_facts: List[Fact]) -> FunctionSummary:
@@ -115,6 +120,24 @@ def compute_function_summary(func: Function, all_module_facts: List[Fact]) -> Fu
                         # src_param taints target_param via mutable reference
                         summary.param_to_mutref_params.setdefault(src_param_idx, set()).add(target_param_idx)
 
+    # Detect return sanitization: param is both tainted and sanitized → return is sanitized
+    tainted_vars = {f.args[1] for f in all_facts if f.name == "Tainted" and f.args[0] == func.name}
+    sanitized_vars = {f.args[1] for f in all_facts if f.name == "Sanitized" and f.args[0] == func.name}
+    for param in func.params:
+        if param.name in tainted_vars and param.name in sanitized_vars:
+            summary.sanitizes_return.add(param.idx)
+
+    # Detect mut-ref sanitization: param is &mut AND is sanitized in the function body
+    # Pattern: fun clamp(val: &mut u64) { if (*val > 100) { *val = 100; }; }
+    for param in func.params:
+        if param.is_mut and param.name in sanitized_vars:
+            summary.sanitizes_mutref.add(param.idx)
+
+    # Also detect mut-ref clamping via conditional deref-assign pattern
+    # if (*val > 100) { *val = 100; } - clamps val even if val isn't a taint source
+    if not summary.sanitizes_mutref:
+        _detect_mutref_clamping(func, summary)
+
     return summary
 
 
@@ -124,6 +147,38 @@ def _get_param_index(func: Function, param_name: str) -> Optional[int]:
         if p.name == param_name:
             return p.idx
     return None
+
+
+def _detect_mutref_clamping(func: Function, summary: FunctionSummary):
+    """Detect mut-ref clamping patterns in function body.
+
+    Pattern: if (*val > 100) { *val = 100; }
+    This clamps the value of a &mut param.
+    """
+    mut_params = {p.name: p.idx for p in func.params if p.is_mut}
+    if not mut_params:
+        return
+
+    for stmt in func.body:
+        _check_mutref_clamp_stmt(stmt, mut_params, summary)
+
+
+def _check_mutref_clamp_stmt(stmt: Stmt, mut_params: Dict[str, int], summary: FunctionSummary):
+    """Check a single statement for mut-ref clamping."""
+    if not isinstance(stmt, IfStmt):
+        return
+    # Check: if (*param op literal) { *param = literal; }
+    from move.ir import BinOp
+
+    cond = stmt.condition
+    if not isinstance(cond, BinOp) or cond.op not in COMPARISON_OPS:
+        return
+    # Find deref-assign to a param with literal value in then_body
+    for s in stmt.then_body:
+        if isinstance(s, AssignStmt) and isinstance(s.target, Deref) and isinstance(s.target.inner, VarRef):
+            param_name = s.target.inner.name
+            if param_name in mut_params and isinstance(s.value, Literal):
+                summary.sanitizes_mutref.add(mut_params[param_name])
 
 
 def run_interprocedural_analysis(module: Module) -> Tuple[List[Fact], Dict[str, FunctionSummary]]:
@@ -240,6 +295,29 @@ def apply_summaries_to_caller(
                                 tainted_by_fact = Fact("TaintedBy", (caller.name, target_var, source))
                                 if tainted_by_fact not in derived and tainted_by_fact not in existing_facts:
                                     derived.append(tainted_by_fact)
+
+            # IPA return sanitization: callee sanitizes return value for this param
+            # let result = sanitize_count(tainted_val) → result is sanitized
+            if arg_idx in callee_summary.sanitizes_return:
+                # Find the CallResult for this call site to get the result var
+                for cr_fact in caller_facts:
+                    if cr_fact.name == "CallResult" and cr_fact.args[1] == stmt_id and cr_fact.args[3] == callee:
+                        result_var = cr_fact.args[2]
+                        san_fact = Fact("SanitizedByClamping", (caller.name, stmt_id, result_var, arg_var))
+                        if san_fact not in derived and san_fact not in existing_facts:
+                            derived.append(san_fact)
+                        # Also emit Sanitized for the result var
+                        sanitized_fact = Fact("Sanitized", (caller.name, result_var))
+                        if sanitized_fact not in derived and sanitized_fact not in existing_facts:
+                            derived.append(sanitized_fact)
+
+            # IPA mut-ref sanitization: callee sanitizes a &mut param
+            # clamp_bound(&mut bound) → bound is sanitized after the call
+            if arg_idx in callee_summary.sanitizes_mutref:
+                for av in arg_vars:
+                    sanitized_fact = Fact("Sanitized", (caller.name, av))
+                    if sanitized_fact not in derived and sanitized_fact not in existing_facts:
+                        derived.append(sanitized_fact)
 
     return derived
 

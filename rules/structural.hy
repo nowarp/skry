@@ -10,7 +10,8 @@
                          version-check-inconsistent?
                          llm-classify-missing-transfer?
                          has-transfer-call? transfers-to-zero-address?
-                         py-weak-randomness?])
+                         py-weak-randomness?
+                         has-unmatched-extraction?])
 (import rules.hy.builtins [has-mutable-param? is-public? is-entry? is-init?
                            has-transfer? has-value-extraction? returns-coin-type?
                            has-transfer*? has-value-extraction*?
@@ -41,7 +42,8 @@
   :match (fun :public)
   :filter (and
             (has-value-extraction*? f facts ctx)    ;; Must have value extraction sink (transitive)
-            (not (has-transfer*? f facts ctx))      ;; No transfer sink in function or callees (transitive)
+            (or (not (has-transfer*? f facts ctx))  ;; No transfer sink in function or callees (transitive)
+                (has-unmatched-extraction? f facts ctx)) ;; Or has extraction not matched on all paths
             (not (returns-coin-type? f facts ctx))  ;; Function doesn't return Coin/Balance
             (not (is-init? f facts ctx)))           ;; Skip init functions
   :classify (llm-classify-missing-transfer? f facts ctx))

@@ -39,7 +39,6 @@ module test::unbounded_loop_mutref {
         if (*val > 100) { *val = 100; };
     }
 
-    // @false-positive: unbounded-loop (clamp sanitizes but not detected)
     public entry fun process_sanitized_mutref(count: u64, ctx: &mut TxContext) {
         let mut bound = count;
         clamp_bound(&mut bound);

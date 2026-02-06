@@ -35,6 +35,10 @@ def run_structural_analysis(ctx: ProjectContext, skip_tests: bool = False) -> No
     generate_value_extraction_facts(ctx)
     generate_sender_derived_param_facts(ctx)  # Needs TrackedDerived from taint, must run before Pass 2
 
+    from analysis.extraction_tracking import run_extraction_analysis
+
+    run_extraction_analysis(ctx)  # Path-sensitive extraction-transfer matching
+
 
 def run_fact_propagation(ctx: ProjectContext) -> None:
     """

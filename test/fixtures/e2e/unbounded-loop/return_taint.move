@@ -33,7 +33,6 @@ module test::unbounded_loop_return {
         if (x > 100) { 100 } else { x }
     }
 
-    // @false-positive: unbounded-loop (return sanitization not detected)
     public entry fun process_sanitized_return(count: u64, ctx: &mut TxContext) {
         let bound = sanitize_count(count);
         let mut i = 0;

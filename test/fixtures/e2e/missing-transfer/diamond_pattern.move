@@ -93,9 +93,8 @@ module test::missing_transfer_diamond {
     // This is a partial coverage case similar to partial_transfer
     // =========================================================================
 
-    /// FALSE NEGATIVE: One branch safe, one leaks
-    /// Rule sees "has transfer" from helper_safe and doesn't flag
-    // @false-negative: missing-transfer (one branch leaks but other transfers)
+    /// VULNERABLE: One branch safe, one leaks
+    // @expect: missing-transfer
     public entry fun diamond_mixed_branches(
         pool: &mut Pool,
         amount: u64,
