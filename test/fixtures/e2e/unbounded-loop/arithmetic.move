@@ -40,7 +40,6 @@ module test::unbounded_loop_arith {
     }
 
     /// SAFE: Tainted value bounded by constant min
-    // @false-positive: unbounded-loop (if-else sanitization not detected)
     public entry fun process_bounded_min(count: u64, ctx: &mut TxContext) {
         let bound = if (count < 100) { count } else { 100 };
         let mut i = 0;

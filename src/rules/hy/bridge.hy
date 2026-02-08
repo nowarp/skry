@@ -216,6 +216,10 @@
   "LLM transfer classification. Generates LLMValueReachesRecipient or LLMMissingTransfer fact."
   (call-llm-classify-missing-transfer f facts ctx))
 
+(defn has-unmatched-extraction? [f facts ctx]
+  "Check if function has extraction not matched by transfer on all paths."
+  (call-check "has_unmatched_extraction" f facts ctx))
+
 (defn llm-classify-sensitive-setter? [f facts ctx]
   "LLM sensitive setter classification. Generates LLMHasSetterAuth or LLMSensitiveSetter fact."
   (call-llm-classify-sensitive-setter f facts ctx))

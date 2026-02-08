@@ -115,8 +115,8 @@ module test::missing_transfer_conditional {
     // This is branch-sensitive - rule can't track per-path
     // =========================================================================
 
-    /// FALSE NEGATIVE: if-branch safe, else-branch leaks
-    // @false-negative: missing-transfer (requires branch-sensitive analysis)
+    /// VULNERABLE: if-branch safe, else-branch leaks
+    // @expect: missing-transfer
     public entry fun if_transfers_else_leaks(
         pool: &mut Pool,
         amount: u64,

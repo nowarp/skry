@@ -308,6 +308,20 @@
       ],
       "privileged_fields": [],
       "lock_fields": []
+    },
+    "test::missing_transfer_move_semantics::Pool": {
+      "is_role": false,
+      "is_privileged": false,
+      "is_user_asset": false,
+      "is_config": false,
+      "is_state_container": true,
+      "config_fields": [],
+      "mutable_config_fields": [],
+      "state_fields": [
+        "balance"
+      ],
+      "privileged_fields": [],
+      "lock_fields": []
     }
   },
   "AccessControlClassify": {
@@ -664,6 +678,26 @@
     },
     "test::missing_transfer_loop::loop_accumulate_then_transfer": {
       "value_reaches_recipient": true,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_loop::loop_accumulate_then_forget": {
+      "value_reaches_recipient": false,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_edge::join_then_forget": {
+      "value_reaches_recipient": false,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_move_semantics::alias_then_transfer": {
+      "value_reaches_recipient": true,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_move_semantics::split_convert_transfer": {
+      "value_reaches_recipient": true,
+      "is_helper_function": false
+    },
+    "test::missing_transfer_move_semantics::alias_no_transfer": {
+      "value_reaches_recipient": false,
       "is_helper_function": false
     }
   }

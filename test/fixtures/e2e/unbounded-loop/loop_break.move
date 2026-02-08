@@ -13,7 +13,7 @@ module test::unbounded_loop_break {
     }
 
     /// VULNERABLE: Loop with tainted continue condition
-    // @false-negative: unbounded-loop (loop/continue pattern not handled)
+    // @expect: unbounded-loop
     public entry fun process_loop_continue(count: u64, ctx: &mut TxContext) {
         let mut i = 0;
         loop {
@@ -24,7 +24,6 @@ module test::unbounded_loop_break {
     }
 
     /// SAFE: Loop with constant early break
-    // @false-positive: unbounded-loop (early break limits iterations)
     public entry fun process_early_break(count: u64, ctx: &mut TxContext) {
         let mut i = 0;
         loop {

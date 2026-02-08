@@ -65,9 +65,8 @@ module test::missing_transfer_edge {
     // Rule limitation: requires per-variable data-flow tracking
     // =========================================================================
 
-    /// FALSE NEGATIVE: Two extractions, only one transferred
-    /// coins2 is leaked but rule sees "has transfer" and doesn't flag
-    // @false-negative: missing-transfer (requires per-variable tracking)
+    /// VULNERABLE: Two extractions, only one transferred
+    // @expect: missing-transfer
     public entry fun partial_transfer(
         pool: &mut Pool,
         amount: u64,
@@ -85,9 +84,8 @@ module test::missing_transfer_edge {
     // Rule limitation: requires branch-sensitive analysis
     // =========================================================================
 
-    /// FALSE NEGATIVE: Transfer only in true branch
-    /// false branch leaks but rule sees "has transfer" and doesn't flag
-    // @false-negative: missing-transfer (requires branch-sensitive analysis)
+    /// VULNERABLE: Transfer only in true branch
+    // @expect: missing-transfer
     public entry fun conditional_transfer_one_branch(
         pool: &mut Pool,
         amount: u64,
@@ -117,6 +115,24 @@ module test::missing_transfer_edge {
         let coins = coin::take(&mut nested.inner.balance, amount, ctx);
         // Missing transfer - put back
         coin::put(&mut nested.inner.balance, coins);
+    }
+
+    // =========================================================================
+    // VULNERABLE: Join then forget
+    // =========================================================================
+
+    /// VULNERABLE: Join then forget
+    // @expect: missing-transfer
+    public entry fun join_then_forget(
+        pool: &mut Pool,
+        amount: u64,
+        ctx: &mut TxContext
+    ) {
+        let coins1 = coin::take(&mut pool.balance, amount, ctx);
+        let mut coins2 = coin::take(&mut pool.balance, amount, ctx);
+        coin::join(&mut coins2, coins1);
+        // coins2 now holds both extractions but is put back
+        coin::put(&mut pool.balance, coins2);
     }
 
     // =========================================================================
