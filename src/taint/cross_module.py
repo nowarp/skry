@@ -84,7 +84,18 @@ def _compose_summaries_transitively(ctx: ProjectContext) -> None:
                 _, _, callee, callee_arg_idx, arg_vars = call_arg.args
 
                 callee_summary = ctx.function_summaries.get(callee)
-                if not callee_summary or not callee_summary.param_to_sinks:
+                if not callee_summary:
+                    continue
+
+                # Propagate callee's guards before checking sinks —
+                # pure auth helpers (e.g. assert_admin) have guards but no sinks
+                if callee_summary.guards:
+                    for guard in callee_summary.guards:
+                        if guard not in summary.guards:
+                            summary.guards.add(guard)
+                            changed = True
+
+                if not callee_summary.param_to_sinks:
                     continue
 
                 # If callee's arg position reaches sinks...
@@ -110,14 +121,6 @@ def _compose_summaries_transitively(ctx: ProjectContext) -> None:
                             if sink_type not in summary.param_to_sinks[our_param_idx]:
                                 summary.param_to_sinks[our_param_idx].add(sink_type)
                                 changed = True
-
-                        # Propagate callee's guards to caller
-                        # If callee has guards, caller's via-sinks are protected
-                        if callee_summary.guards:
-                            for guard in callee_summary.guards:
-                                if guard not in summary.guards:
-                                    summary.guards.add(guard)
-                                    changed = True
 
     if iterations > 1:
         debug(f"Composed summaries transitively in {iterations} iterations")
